@@ -27,27 +27,25 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
         self::func()->add_filter( 'plugin_row_meta', array($this, 'plugin_row_links' ), 10, 2 );
         self::func()->add_action( 'admin_init', array( $this, 'admin_init' ));
         self::func()->add_action( 'plugins_loaded', array( $this, 'init' ) );
+        self::func()->add_filter( 'woocommerce_get_settings_pages',  array($this,'settings_page') ); 
 
-        
 	}
 
     /**
      * Inits Admin Sttings
      */
     public function admin_init(){
-        new WooCommerce_Plugin_Boiler_Plate_Admin_Settings;
+       # new WooCommerce_Plugin_Boiler_Plate_Admin_Settings;
     }
-    
-    
-    public function init(){ 
-        self::func()->add_filter( 'woocommerce_integrations', array( $this, 'add_integration' ) );
-    }
+ 
     
 	/**
 	 * Add a new integration to WooCommerce.
 	 */
-	public function add_integration( $integrations ) {
-		$integrations[] = 'WooCommerce_Plugin_Boiler_Plate_Settings_Intergation';
+	public function settings_page( $integrations ) {
+        foreach(glob(PLUGIN_PATH.'admin/woocommerce-settings*.php' ) as $file){
+            $integrations[] = require_once($file);
+        }
 		return $integrations;
 	}
     

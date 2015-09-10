@@ -84,7 +84,7 @@ class WooCommerce_Plugin_Boiler_Plate {
         return self::$functions;
     }
     
-    //plugin_dir_path( __FILE__ ) . 'includes/*.php'
+
     protected function load_files($path,$type = 'require'){
         foreach( glob( $path ) as $files ){
 
@@ -101,7 +101,6 @@ class WooCommerce_Plugin_Boiler_Plate {
      * Set Plugin Text Domain
      */
     public function after_plugins_loaded(){
- 
         load_plugin_textdomain(PLUGIN_TEXT_DOMAIN, false, PLUGIN_LANGUAGE_PATH );
     }
     

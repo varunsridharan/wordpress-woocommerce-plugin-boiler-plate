@@ -15,12 +15,12 @@
  */
 if ( ! defined( 'WPINC' ) ) { die; }
 
-class WooCommerce_Plugin_Boiler_Plate_Admin_Settings extends WooCommerce_Plugin_Boiler_Plate_Admin {
+#class WooCommerce_Plugin_Boiler_Plate_Admin_Settings extends WooCommerce_Plugin_Boiler_Plate_Admin {
     
-    public function __construct() {
+    #public function __construct() {
         
-    }
-}
+    #}
+#}
 
 
 
