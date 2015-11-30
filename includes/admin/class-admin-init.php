@@ -15,7 +15,7 @@
  */
 if ( ! defined( 'WPINC' ) ) { die; }
 
-class Broken_Url_Notifier_Admin extends Broken_Url_Notifier {
+class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Plate {
 
     /**
 	 * Initialize the class and set its properties.
@@ -36,7 +36,8 @@ class Broken_Url_Notifier_Admin extends Broken_Url_Notifier {
      * Inits Admin Sttings
      */
     public function admin_init(){
-       # new Broken_Url_Notifier_Admin_Settings;
+		 new WooCommerce_Plugin_Boiler_Plate_Admin_Options;
+       # new WooCommerce_Plugin_Boiler_Plate_Admin_Settings;
     }
  
     
@@ -44,7 +45,7 @@ class Broken_Url_Notifier_Admin extends Broken_Url_Notifier {
 	 * Add a new integration to WooCommerce.
 	 */
 	public function settings_page( $integrations ) {
-        foreach(glob(BUN_PATH.'admin/woocommerce-settings*.php' ) as $file){
+        foreach(glob(PLUGIN_PATH.'admin/woocommerce-settings*.php' ) as $file){
             $integrations[] = require_once($file);
         }
 		return $integrations;
@@ -55,7 +56,7 @@ class Broken_Url_Notifier_Admin extends Broken_Url_Notifier {
 	 */
 	public function enqueue_styles() { 
         if(in_array($this->current_screen() , $this->get_screen_ids())) {
-            wp_enqueue_style(BUN_SLUG.'_core_style',plugins_url('css/style.css',__FILE__) , array(), $this->version, 'all' );  
+            wp_enqueue_style(PLUGIN_SLUG.'_core_style',plugins_url('css/style.css',__FILE__) , array(), $this->version, 'all' );  
         }
 	}
 	
@@ -65,7 +66,7 @@ class Broken_Url_Notifier_Admin extends Broken_Url_Notifier {
 	 */
 	public function enqueue_scripts() {
         if(in_array($this->current_screen() , $this->get_screen_ids())) {
-            wp_enqueue_script(BUN_SLUG.'_core_script', plugins_url('js/script.js',__FILE__), array('jquery'), $this->version, false ); 
+            wp_enqueue_script(PLUGIN_SLUG.'_core_script', plugins_url('js/script.js',__FILE__), array('jquery'), $this->version, false ); 
         }
  
 	}
@@ -99,7 +100,7 @@ class Broken_Url_Notifier_Admin extends Broken_Url_Notifier {
 	 * @return array
 	 */
 	public function plugin_row_links( $plugin_meta, $plugin_file ) {
-		if ( BUN_FILE == $plugin_file ) {
+		if ( PLUGIN_FILE == $plugin_file ) {
             $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', $this->__('Settings') );
             $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', $this->__('F.A.Q') );
             $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', 'View On Github' );

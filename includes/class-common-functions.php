@@ -14,7 +14,7 @@
  */
 if ( ! defined( 'WPINC' ) ) { die; }
 
-class Broken_Url_Notifier_Functions {
+class WooCommerce_Plugin_Boiler_Plate_Functions {
 
 
 }

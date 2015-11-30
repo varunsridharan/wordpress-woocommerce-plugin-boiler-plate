@@ -2,15 +2,15 @@
 
 if ( ! defined( 'WPINC' ) ) { die; }
  
-class Broken_Url_Notifier {
+class WooCommerce_Plugin_Boiler_Plate {
 	/**
 	 * @var string
 	 */
 	public $version = '0.1';
 	public $plugin_vars = array();
-
 	protected static $_instance = null;
     protected static $functions = null;
+	public static $settings = null;
 
     /**
      * Creates or returns an instance of this class.
@@ -45,10 +45,10 @@ class Broken_Url_Notifier {
      * Loads Required Plugins For Plugin
      */
     private function load_required_files(){
-       $this->load_files(BUN_PATH.'includes/class-common-*.php');
+       $this->load_files(PLUGIN_INC.'class-common-*.php');
         
        if($this->is_request('admin')){
-           $this->load_files(BUN_PATH.'admin/class-*.php');
+           $this->load_files(PLUGIN_ADMIN.'class-*.php');
        } 
 
     }
@@ -57,10 +57,11 @@ class Broken_Url_Notifier {
      * Inits loaded Class
      */
     private function init_class(){
-        self::$functions = new Broken_Url_Notifier_Functions;
+        self::$functions = new WooCommerce_Plugin_Boiler_Plate_Functions;
+		self::$settings = new WooCommerce_Quick_Donation_Settings; 
         
         if($this->is_request('admin')){
-            $this->admin = new Broken_Url_Notifier_Admin;
+            $this->admin = new WooCommerce_Plugin_Boiler_Plate_Admin;
         }
     }
     
@@ -86,15 +87,15 @@ class Broken_Url_Notifier {
      * Set Plugin Text Domain
      */
     public function after_plugins_loaded(){
-        load_plugin_textdomain(BUN_TEXT_DOMAIN, false, BUN_LANGUAGE_PATH );
+        load_plugin_textdomain(PLUGIN_TEXT_DOMAIN, false, PLUGIN_LANGUAGE_PATH );
     }
     
     /**
      * load translated mo file based on wp settings
      */
     public function load_plugin_mo_files($mofile, $domain) {
-        if (BUN_TEXT_DOMAIN === $domain)
-            return BUN_LANGUAGE_PATH.'/'.get_locale().'.mo';
+        if (PLUGIN_TXT === $domain)
+            return PLUGIN_LANGUAGE_PATH.'/'.get_locale().'.mo';
 
         return $mofile;
     }
@@ -103,13 +104,22 @@ class Broken_Url_Notifier {
      * Define Required Constant
      */
     private function define_constant(){
-        $this->define('BUN_NAME', 'broken url notifier'); # Plugin Name
-        $this->define('BUN_SLUG','broken-url-notifier'); # Plugin Slug
-        $this->define('BUN_PATH',plugin_dir_path( __FILE__ )); # Plugin DIR
-        $this->define('BUN_LANGUAGE_PATH',BUN_PATH.'languages');
-        $this->define('BUN_TEXT_DOMAIN','broken-url-notifier'); #plugin lang Domain
-        $this->define('BUN_URL',plugins_url('', __FILE__ )); 
-        $this->define('BUN_FILE',plugin_basename( __FILE__ ));
+        $this->define('PLUGIN_NAME', 'WooCommerce Plugin Boiler Plate'); # Plugin Name
+        $this->define('PLUGIN_SLUG','wc-pbp'); # Plugin Slug
+        $this->define('PLUGIN_TXT','woocommerce-plugin-boiler-plate'); #plugin lang Domain
+
+		$this->define('PLUGIN_V',$this->version);
+        
+		$this->define('PLUGIN_PATH',plugin_dir_path( __FILE__ )); # Plugin DIR
+		$this->define('PLUGIN_LANGUAGE_PATH',PLUGIN_PATH.'languages');
+		$this->define('PLUGIN_INC',PLUGIN_PATH.'includes/');
+		$this->define('PLUGIN_ADMIN',PLUGIN_INC.'admin/');
+		$this->define('PLUGIN_CSS',PLUGIN_INC.'css/');
+		$this->define('PLUGIN_JS',PLUGIN_INC.'js/');
+		
+		
+		$this->define('PLUGIN_URL',plugins_url('', __FILE__ )); 
+        $this->define('PLUGIN_FILE',plugin_basename( __FILE__ ));
     }
 	
 	private function set_vars(){
@@ -146,22 +156,10 @@ class Broken_Url_Notifier {
 									 
         
     protected function __($string){
-        return __($string,BUN_TEXT_DOMAIN);
-    }
-    /**
-     * Adds Filter / Action
-     */
-    protected function add_filter_action($key,$value,$type = 'action' , $priority = 10, $variable = 1){
-        if($type == 'action'){
-            add_action($key,$value,$priority,$variable);        
-        } else if($type == 'filter'){
-            add_filter($key,$value,$priority,$variable);        
-        } else {
-            return false;
-        }
+        return __($string,PLUGIN_TXT);
     }
 
-    
+	
 	/**
 	 * What type of request is this?
 	 * string $type ajax, frontend or admin

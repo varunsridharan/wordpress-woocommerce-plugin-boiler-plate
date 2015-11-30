@@ -9,7 +9,7 @@
 
 if ( class_exists( 'WC_Integration' ) ) :
 
-class Broken_Url_Notifier_Settings_Intergation extends WC_Integration {
+class WooCommerce_Plugin_Boiler_Plate_Settings_Intergation extends WC_Integration {
 
 	/**
 	 * Init and hook in the integration.

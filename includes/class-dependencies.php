@@ -4,8 +4,8 @@
  *
  * Checks if WooCommerce is enabled
  */
-if ( ! class_exists( 'Broken_Url_Notifier_Dependencies' ) ){
-    class Broken_Url_Notifier_Dependencies {
+if ( ! class_exists( 'WooCommerce_Plugin_Boiler_Plate_Dependencies' ) ){
+    class WooCommerce_Plugin_Boiler_Plate_Dependencies {
         private static $active_plugins;
         public static function init() {
             self::$active_plugins = (array) get_option( 'active_plugins', array() );
@@ -21,9 +21,9 @@ if ( ! class_exists( 'Broken_Url_Notifier_Dependencies' ) ){
 /**
  * WC Detection
  */
-if(! function_exists('Broken_Url_Notifier_Dependencies')){
-    function Broken_Url_Notifier_Dependencies($pluginToCheck = 'woocommerce/woocommerce.php') {
-        return Broken_Url_Notifier_Dependencies::woocommerce_active_check($pluginToCheck);
+if(! function_exists('WooCommerce_Plugin_Boiler_Plate_Dependencies')){
+    function WooCommerce_Plugin_Boiler_Plate_Dependencies($pluginToCheck = 'woocommerce/woocommerce.php') {
+        return WooCommerce_Plugin_Boiler_Plate_Dependencies::woocommerce_active_check($pluginToCheck);
     }
 }
 ?>
