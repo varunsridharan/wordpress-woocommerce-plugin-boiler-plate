@@ -15,19 +15,20 @@
  */
 if ( ! defined( 'WPINC' ) ) { die; }
 
-class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Plate {
+class Broken_Url_Notifier_Admin extends Broken_Url_Notifier {
 
     /**
 	 * Initialize the class and set its properties.
 	 * @since      0.1
 	 */
 	public function __construct() {
-        self::func()->add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ),99);
-        self::func()->add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-        self::func()->add_filter( 'plugin_row_meta', array($this, 'plugin_row_links' ), 10, 2 );
-        self::func()->add_action( 'admin_init', array( $this, 'admin_init' ));
-        self::func()->add_action( 'plugins_loaded', array( $this, 'init' ) );
-        self::func()->add_filter( 'woocommerce_get_settings_pages',  array($this,'settings_page') ); 
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ),99);
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+        add_action( 'admin_init', array( $this, 'admin_init' ));
+        add_action( 'plugins_loaded', array( $this, 'init' ) );
+
+		add_filter( 'plugin_row_meta', array($this, 'plugin_row_links' ), 10, 2 );
+        add_filter( 'woocommerce_get_settings_pages',  array($this,'settings_page') ); 
 
 	}
 
@@ -35,7 +36,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
      * Inits Admin Sttings
      */
     public function admin_init(){
-       # new WooCommerce_Plugin_Boiler_Plate_Admin_Settings;
+       # new Broken_Url_Notifier_Admin_Settings;
     }
  
     
@@ -43,7 +44,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
 	 * Add a new integration to WooCommerce.
 	 */
 	public function settings_page( $integrations ) {
-        foreach(glob(PLUGIN_PATH.'admin/woocommerce-settings*.php' ) as $file){
+        foreach(glob(BUN_PATH.'admin/woocommerce-settings*.php' ) as $file){
             $integrations[] = require_once($file);
         }
 		return $integrations;
@@ -54,7 +55,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
 	 */
 	public function enqueue_styles() { 
         if(in_array($this->current_screen() , $this->get_screen_ids())) {
-            wp_enqueue_style(PLUGIN_SLUG.'_core_style',plugins_url('css/style.css',__FILE__) , array(), $this->version, 'all' );  
+            wp_enqueue_style(BUN_SLUG.'_core_style',plugins_url('css/style.css',__FILE__) , array(), $this->version, 'all' );  
         }
 	}
 	
@@ -64,7 +65,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
 	 */
 	public function enqueue_scripts() {
         if(in_array($this->current_screen() , $this->get_screen_ids())) {
-            wp_enqueue_script(PLUGIN_SLUG.'_core_script', plugins_url('js/script.js',__FILE__), array('jquery'), $this->version, false ); 
+            wp_enqueue_script(BUN_SLUG.'_core_script', plugins_url('js/script.js',__FILE__), array('jquery'), $this->version, false ); 
         }
  
 	}
@@ -98,7 +99,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
 	 * @return array
 	 */
 	public function plugin_row_links( $plugin_meta, $plugin_file ) {
-		if ( PLUGIN_FILE == $plugin_file ) {
+		if ( BUN_FILE == $plugin_file ) {
             $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', $this->__('Settings') );
             $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', $this->__('F.A.Q') );
             $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', 'View On Github' );

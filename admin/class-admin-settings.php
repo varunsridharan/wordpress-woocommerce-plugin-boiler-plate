@@ -15,7 +15,7 @@
  */
 if ( ! defined( 'WPINC' ) ) { die; }
 
-#class WooCommerce_Plugin_Boiler_Plate_Admin_Settings extends WooCommerce_Plugin_Boiler_Plate_Admin {
+#class Broken_Url_Notifier_Admin_Settings extends Broken_Url_Notifier_Admin {
     
     #public function __construct() {
         
