@@ -1,14 +1,6 @@
 <?php
 /**
  * The admin-specific functionality of the plugin.
- *
- * @link       https://wordpress.org/plugins/woocommerce-role-based-price/
- *
- * The admin-specific functionality of the plugin.
- *
- * Defines the plugin name, version, and two examples hooks for how to
- * enqueue the admin-specific stylesheet and JavaScript.
- *
  * @package    @TODO
  * @subpackage @TODO
  * @author     Varun Sridharan <varunsridharan23@gmail.com>
@@ -29,14 +21,13 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
 
 		add_filter( 'plugin_row_meta', array($this, 'plugin_row_links' ), 10, 2 );
         add_filter( 'woocommerce_get_settings_pages',  array($this,'settings_page') ); 
-
+		new WooCommerce_Plugin_Boiler_Plate_Admin_Options;
 	}
 
     /**
      * Inits Admin Sttings
      */
     public function admin_init(){
-		 new WooCommerce_Plugin_Boiler_Plate_Admin_Options;
        # new WooCommerce_Plugin_Boiler_Plate_Admin_Settings;
     }
  
@@ -45,7 +36,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
 	 * Add a new integration to WooCommerce.
 	 */
 	public function settings_page( $integrations ) {
-        foreach(glob(PLUGIN_PATH.'admin/woocommerce-settings*.php' ) as $file){
+        foreach(glob(PLUGIN_ADMIN.'woocommerce-settings*.php' ) as $file){
             $integrations[] = require_once($file);
         }
 		return $integrations;
@@ -56,7 +47,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
 	 */
 	public function enqueue_styles() { 
         if(in_array($this->current_screen() , $this->get_screen_ids())) {
-            wp_enqueue_style(PLUGIN_SLUG.'_core_style',plugins_url('css/style.css',__FILE__) , array(), $this->version, 'all' );  
+            wp_enqueue_style(PLUGIN_SLUG.'_core_style',PLUGIN_CSS.'style.css' , array(), PLUGIN_V, 'all' );  
         }
 	}
 	
@@ -66,7 +57,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
 	 */
 	public function enqueue_scripts() {
         if(in_array($this->current_screen() , $this->get_screen_ids())) {
-            wp_enqueue_script(PLUGIN_SLUG.'_core_script', plugins_url('js/script.js',__FILE__), array('jquery'), $this->version, false ); 
+            wp_enqueue_script(PLUGIN_SLUG.'_core_script', PLUGIN_JS.'script.js', array('jquery'), PLUGIN_V, false ); 
         }
  
 	}
@@ -86,8 +77,6 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
      */
     public function get_screen_ids(){
         $screen_ids = array();
-        $screen_ids[] = 'edit-product';
-        $screen_ids[] = 'product';
         return $screen_ids;
     }
     
@@ -101,12 +90,12 @@ class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Pl
 	 */
 	public function plugin_row_links( $plugin_meta, $plugin_file ) {
 		if ( PLUGIN_FILE == $plugin_file ) {
-            $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', $this->__('Settings') );
-            $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', $this->__('F.A.Q') );
-            $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', 'View On Github' );
-            $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', $this->__('Report Issue') );
-            $plugin_meta[] = sprintf('&hearts; <a href="%s">%s</a>', '#', $this->__('Donate') );
-            $plugin_meta[] = sprintf('<a href="%s">%s</a>', 'http://varunsridharan.in/plugin-support/', $this->__('Contact Author') );
+            $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', __('Settings',PLUGIN_TXT) );
+            $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', __('F.A.Q',PLUGIN_TXT) );
+            $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', __('View On Github',PLUGIN_TXT) );
+            $plugin_meta[] = sprintf('<a href="%s">%s</a>', '#', __('Report Issue',PLUGIN_TXT) );
+            $plugin_meta[] = sprintf('&hearts; <a href="%s">%s</a>', '#', $this->__('Donate',PLUGIN_TXT) );
+            $plugin_meta[] = sprintf('<a href="%s">%s</a>', 'http://varunsridharan.in/plugin-support/', __('Contact Author',PLUGIN_TXT) );
 		}
 		return $plugin_meta;
 	}	    

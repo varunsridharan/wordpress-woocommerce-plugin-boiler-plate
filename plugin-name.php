@@ -15,7 +15,7 @@
 if ( ! defined( 'WPINC' ) ) { die; }
  
 
-require_once(plugin_dir_path(__FILE__).'plugin-name.php');
+require_once(plugin_dir_path(__FILE__).'bootstrap.php');
 require_once(plugin_dir_path(__FILE__).'includes/class-dependencies.php');
 
 
@@ -25,7 +25,7 @@ if(WooCommerce_Plugin_Boiler_Plate_Dependencies()){
 			return WooCommerce_Plugin_Boiler_Plate::get_instance();
 		}
 	}
-	
+	WooCommerce_Plugin_Boiler_Plate();
 }
 
 ?>

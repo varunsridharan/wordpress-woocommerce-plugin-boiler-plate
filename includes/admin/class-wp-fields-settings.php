@@ -6,8 +6,8 @@
  * @version 0.1
  * @author keesiemeijer
  */
-if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_Fields' ) ) {
-	class WooCommerce_Plugin_Boiler_Plate_Settings_Fields {
+if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_WP_Settings_Fields' ) ) {
+	class WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields {
 
 		public $version = 2.0;
 

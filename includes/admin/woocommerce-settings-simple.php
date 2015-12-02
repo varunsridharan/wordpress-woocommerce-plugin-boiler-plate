@@ -25,7 +25,7 @@ class WooCommerce_Simple_Settings extends WC_Settings_Page {
 	public function __construct() {
 
 		$this->id    = 'wc_intergation_simple';
-		$this->label = __( 'WC Simple Intergation', 'woocommerce' );
+		$this->label = __( 'WC Simple Intergation', PLUGIN_TXT );
 
 		add_filter( 'woocommerce_settings_tabs_array', array( $this, 'add_settings_page' ), 20 );
 		add_action( 'woocommerce_settings_' . $this->id, array( $this, 'output' ) );
@@ -42,15 +42,15 @@ class WooCommerce_Simple_Settings extends WC_Settings_Page {
 		$settings = array(
 
 			array( 
-                'title' => __( 'Simple Options', 'woocommerce' ), 
+                'title' => __( 'Simple Options', PLUGIN_TXT ), 
                 'type' => 'title', 
                 'desc' => '', 
                 'id' => 'wc_simple_intergation' 
             ),
 
 			array(
-				'title'    => __( 'Text Box', 'woocommerce' ),
-				'desc'     => __( 'This is a simple textbox', 'woocommerce' ),
+				'title'    => __( 'Text Box', PLUGIN_TXT ),
+				'desc'     => __( 'This is a simple textbox', PLUGIN_TXT ),
 				'id'       =>'wc_simple_textbox',
 				'css'      => 'min-width:350px;',
 				'default'  => 'GB',
@@ -59,33 +59,33 @@ class WooCommerce_Simple_Settings extends WC_Settings_Page {
 			),
 
             array(
-				'title'    => __( 'TextArea', 'woocommerce' ),
+				'title'    => __( 'TextArea', PLUGIN_TXT ),
 				'desc'     => '',
 				'id'       => 'wc_simple_textarea',
-				'default'  => __( 'SOme Value.', 'woocommerce' ),
+				'default'  => __( 'SOme Value.', PLUGIN_TXT ),
 				'type'     => 'textarea',
 				'css'     => 'width:350px; height: 65px;',
 				'autoload' => false
 			),
             
 			array(
-				'title'    => __( 'Radio Buttons', 'woocommerce' ),
-				'desc'     => __( 'A Simple Radio Button', 'woocommerce' ),
+				'title'    => __( 'Radio Buttons', PLUGIN_TXT ),
+				'desc'     => __( 'A Simple Radio Button', PLUGIN_TXT ),
 				'id'       => 'wc_simple_radio',
 				'default'  => 'all',
 				'type'     => 'radio',  
 				'desc_tip' =>  true,
 				'options'  => array(
-					'all'      => __( 'Sell to all countries', 'woocommerce' ),
-					'specific' => __( 'Sell to specific countries only', 'woocommerce' )
+					'all'      => __( 'Sell to all countries', PLUGIN_TXT ),
+					'specific' => __( 'Sell to specific countries only', PLUGIN_TXT )
 				)
 			),
 
 			  
 
 			array(
-				'title'   => __( 'Checbox', 'woocommerce' ),
-				'desc'    => __( 'A Simple Checkbox', 'woocommerce' ),
+				'title'   => __( 'Checbox', PLUGIN_TXT ),
+				'desc'    => __( 'A Simple Checkbox', PLUGIN_TXT ),
 				'id'      => 'wc_simple_checkboxx',
 				'default' => 'no',
 				'type'    => 'checkbox'

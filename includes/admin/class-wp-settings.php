@@ -7,8 +7,8 @@
  *
  * @author keesiemeijer
  */
-if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings' ) ) {
-	class WooCommerce_Plugin_Boiler_Plate_Settings {
+if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_WP_Settings' ) ) {
+	class WooCommerce_Plugin_Boiler_Plate_WP_Settings {
 
 		/**
 		 * Version of WP_Settings_Settings class
@@ -114,8 +114,8 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings' ) ) {
 
 			// Debug strings don't use Gettext functions for translation.
 
-			if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_Fields' ) ) {
-				$this->debug  .= "Error: class WooCommerce_Plugin_Boiler_Plate_Settings_Fields doesn't exist<br/>";
+			if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields' ) ) {
+				$this->debug  .= "Error: class WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields doesn't exist<br/>";
 			}
 
 			if ( '' === $this->page_hook ) {
@@ -139,7 +139,7 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings' ) ) {
 			}
 
 			// Instanciate the form fields.
-			$this->fields = new WooCommerce_Plugin_Boiler_Plate_Settings_Fields( get_settings_errors() );
+			$this->fields = new WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields( get_settings_errors() );
 
 			// Array of fields that needs the 'label_for' parameter (add_settings_field()).
 			$this->label_for = apply_filters( "{$this->page_hook}_label_for", $this->label_for );
@@ -181,9 +181,9 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings' ) ) {
 
 				// Add page hook to sections and page ids.
 				$page_id = ( $this->multiple_forms ) ? $section['id'] : $this->current_page['id'];
-				$page_id = $this->page_hook . '_' . $page_id;
-				$section_id = $this->page_hook . '_' . $section['id'];
-
+				$page_id = $this->page_hook .''. $page_id;
+				$section_id = $this->page_hook .''. $section['id'];
+				
 				// Add database option(s) to debug messages.
 				$this->debug .= ( '' ===  $this->debug ) ? 'Database option(s) created for this page:<br/>' : '';
 				$this->debug .= "database option: " . $section_id . '<br/>'; // database option name
@@ -248,7 +248,7 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings' ) ) {
 					}
 
 					if ( in_array( $args['type'] , $this->label_for ) ) {
-						$args['label_for'] = $sections_id . '_' . $args['id'];
+						$args['label_for'] = $sections_id .''. $args['id'];
 					}
 
 					if ( $multiple ) {
@@ -301,8 +301,8 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings' ) ) {
 						$page['id'] = ( count( $page['sections'] )  > 1 ) ? $section['id'] : $page['id'];
 					}
 
-					$page_id = $this->page_hook . '_' . $page['id'];
-					$sections_id = $this->page_hook . '_' . $section['id'];
+					$page_id = $this->page_hook .''. $page['id'];
+					$sections_id = $this->page_hook .''. $section['id'];
 
 					if ( isset( $section['validate_callback'] ) && $section['validate_callback'] ) {
 						register_setting( $page_id, $sections_id, $section['validate_callback']  );
@@ -324,7 +324,7 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings' ) ) {
 			$settings = array();
 
 			if ( !empty( $section ) ) {
-				return get_option( $this->page_hook . '_' . $section );
+				return get_option( $this->page_hook .''. $section );
 			}
 
 			foreach ( (array) $this->pages as $page ) {
@@ -337,7 +337,7 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings' ) ) {
 						continue;
 					}
 
-					$option = get_option( $this->page_hook . '_' . $section['id'] );
+					$option = get_option( $this->page_hook .''. $section['id'] );
 					if ( $option ) {
 						unset( $option['section_id'] );
 						$settings[ $section['id'] ] =  $option;
@@ -527,7 +527,7 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings' ) ) {
 		 */
 		public function render_section_description( $section ) {
 			foreach ( $this->current_page['sections'] as $setting ) {
-				if ( $this->page_hook . '_' . $setting['id'] === $section['id'] )
+				if ( $this->page_hook .''. $setting['id'] === $section['id'] )
 					echo $setting['desc'];
 			}
 		}
@@ -639,8 +639,8 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings' ) ) {
 					// lets you add additional fields
 					echo apply_filters( "{$this->page_hook}_form_fields", '', $form['id'], $form );
 
-					settings_fields( $this->page_hook . '_' . $form['id'] );
-					do_settings_sections( $this->page_hook . '_' . $form['id'] );
+					settings_fields( $this->page_hook .''. $form['id'] );
+					do_settings_sections( $this->page_hook .''. $form['id'] );
 
 					$submit = ( isset( $form['submit'] ) && $form['submit'] ) ? $form['submit'] : '';
 
