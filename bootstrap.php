@@ -29,13 +29,6 @@ class WooCommerce_Plugin_Boiler_Plate {
 		$this->set_vars();
         $this->load_required_files();
         $this->init_class();
-        add_action( 'init', array( $this, 'init' )); 
-    }
-    
-    /**
-     * Triggers When INIT Action Called
-     */
-    public function init(){
         add_action('plugins_loaded', array( $this, 'after_plugins_loaded' ));
         add_filter('load_textdomain_mofile',  array( $this, 'load_plugin_mo_files' ), 10, 2);
     }
@@ -94,7 +87,7 @@ class WooCommerce_Plugin_Boiler_Plate {
      * Set Plugin Text Domain
      */
     public function after_plugins_loaded(){
-        load_plugin_textdomain(PLUGIN_TEXT_DOMAIN, false, PLUGIN_LANGUAGE_PATH );
+        load_plugin_textdomain(PLUGIN_TXT, false, PLUGIN_LANGUAGE_PATH );
     }
     
     /**
@@ -115,28 +108,19 @@ class WooCommerce_Plugin_Boiler_Plate {
         $this->define('PLUGIN_SLUG', 'woocommerce-plugin-boiler-plate'); # Plugin Slug
         $this->define('PLUGIN_TXT',  'woocommerce-plugin-boiler-plate'); #plugin lang Domain
 		$this->define('PLUGIN_DB', 'wc_pbp');
-		
 		$this->define('PLUGIN_V',$this->version); # Plugin Version
-		
 		$this->define('PLUGIN_PATH',plugin_dir_path( __FILE__ )); # Plugin DIR
 		$this->define('PLUGIN_LANGUAGE_PATH',PLUGIN_PATH.'languages'); # Plugin Language Folder
 		$this->define('PLUGIN_INC',PLUGIN_PATH.'includes/'); # Plugin INC Folder
 		$this->define('PLUGIN_ADMIN',PLUGIN_INC.'admin/'); # Plugin Admin Folder
 		$this->define('PLUGIN_SETTINGS',PLUGIN_INC.'admin/settings/'); # Plugin Settings Folder
-		
-		$this->define('PLUGIN_URL',plugins_url('', __FILE__ ));  # Plugin URL
+		$this->define('PLUGIN_URL',plugins_url('', __FILE__ ).'/');  # Plugin URL
 		$this->define('PLUGIN_CSS',PLUGIN_URL.'includes/css/'); # Plugin CSS URL
 		$this->define('PLUGIN_IMG',PLUGIN_URL.'includes/img/'); # Plugin IMG URL
 		$this->define('PLUGIN_JS',PLUGIN_URL.'includes/js/'); # Plugin JS URL
-		
         $this->define('PLUGIN_FILE',plugin_basename( __FILE__ )); # Current File
-
     }
 	
-	private function set_vars(){
-		
-	}
-    
     /**
 	 * Define constant if not already set
 	 * @param  string $name
@@ -148,25 +132,7 @@ class WooCommerce_Plugin_Boiler_Plate {
         }
     }
     
-	/**
-	 * Get Plugin Vars
-	 */
-	private function get_vars($key){
-		if(isset($this->plugin_vars[$key])){
-			return $this->plugin_vars[$key];
-		}
-									
-		return false;
-	}
-	
-	/**
-	 * Set Plugin Vars
-	 */
-	private function add_vars($key,$value){
-		if(!isset($this->plugin_vars[$key])){
-			$this->plugin_vars[$key] = $value;
-		}
-	}
+	 
 									 
 	/**
 	 * What type of request is this?
