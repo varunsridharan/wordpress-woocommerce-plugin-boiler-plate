@@ -1,5 +1,13 @@
 <?php 
-
+/**
+ * Plugin Main File
+ *
+ * @link [plugin_url]
+ *
+ * @package [package]
+ * @subpackage [package]/core
+ * @since [version]
+ */
 if ( ! defined( 'WPINC' ) ) { die; }
  
 class WooCommerce_Plugin_Boiler_Plate {
@@ -26,7 +34,6 @@ class WooCommerce_Plugin_Boiler_Plate {
      */
     public function __construct() {
         $this->define_constant();
-		$this->set_vars();
         $this->load_required_files();
         $this->init_class();
         add_action('plugins_loaded', array( $this, 'after_plugins_loaded' ));
@@ -107,7 +114,7 @@ class WooCommerce_Plugin_Boiler_Plate {
         $this->define('PLUGIN_NAME', 'WooCommerce Plugin Boiler Plate'); # Plugin Name
         $this->define('PLUGIN_SLUG', 'woocommerce-plugin-boiler-plate'); # Plugin Slug
         $this->define('PLUGIN_TXT',  'woocommerce-plugin-boiler-plate'); #plugin lang Domain
-		$this->define('PLUGIN_DB', 'wc_pbp');
+		$this->define('PLUGIN_DB', 'wc_pbp_');
 		$this->define('PLUGIN_V',$this->version); # Plugin Version
 		$this->define('PLUGIN_PATH',plugin_dir_path( __FILE__ )); # Plugin DIR
 		$this->define('PLUGIN_LANGUAGE_PATH',PLUGIN_PATH.'languages'); # Plugin Language Folder
@@ -118,7 +125,6 @@ class WooCommerce_Plugin_Boiler_Plate {
 		$this->define('PLUGIN_CSS',PLUGIN_URL.'includes/css/'); # Plugin CSS URL
 		$this->define('PLUGIN_IMG',PLUGIN_URL.'includes/img/'); # Plugin IMG URL
 		$this->define('PLUGIN_JS',PLUGIN_URL.'includes/js/'); # Plugin JS URL
-        $this->define('PLUGIN_FILE',plugin_basename( __FILE__ )); # Current File
     }
 	
     /**

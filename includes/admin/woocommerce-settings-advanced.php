@@ -68,7 +68,6 @@ class WooCommerce_Advanced_Settings extends WC_Settings_Page {
 	 * @return array
 	 */
 	public function get_settings($section = null) { 
-        var_dump($section);
 		$settings = array(
 
 			array( 

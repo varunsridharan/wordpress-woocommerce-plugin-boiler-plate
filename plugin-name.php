@@ -14,6 +14,8 @@
 
 if ( ! defined( 'WPINC' ) ) { die; }
  
+define('PLUGIN_FILE',plugin_basename( __FILE__ ));
+
 require_once(plugin_dir_path(__FILE__).'bootstrap.php');
 require_once(plugin_dir_path(__FILE__).'includes/class-dependencies.php');
 

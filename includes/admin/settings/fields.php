@@ -10,18 +10,7 @@ $fields['settings_general']['general'][] = array(
     'size '   => 'small',
     'options' => array('cart' => __('Cart Page',PLUGIN_TXT) , 'checkout' => __('Checkout Page',PLUGIN_TXT)),
     'attr'    => array('class' => 'wc-enhanced-select','style' => 'width:auto;max-width:35%;')
-);
-
-/** General Settings **/
-$fields['settings_general']['general'][] = array(
-    'id'      =>  PLUGIN_DB.'already_exist_redirect_user',
-    'type'    => 'select',
-    'label'   => __( 'Donation Exist Redirect', PLUGIN_TXT),
-    'desc'    => __( 'Redirect User When Donation Already Exist In Cart',PLUGIN_TXT),
-    'size '   => 'small',
-    'options' => array('cart' => __('Cart Page',PLUGIN_TXT) , 'checkout' => __('Checkout Page',PLUGIN_TXT)),
-    'attr'    => array('class' => 'wc-enhanced-select','style' => 'width:auto;max-width:35%;')
-);
+); 
 
 
 /** Message Settings **/

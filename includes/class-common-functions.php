@@ -1,16 +1,14 @@
 <?php
 /**
- * functionality of the plugin.
+ * Dependency Checker
  *
- * @link       @TODO
- * @since      1.0
+ * Checks if required Dependency plugin is enabled
  *
- * @package    @TODO
- * @subpackage @TODO
+ * @link [plugin_url]
  *
- * @package    @TODO
- * @subpackage @TODO
- * @author     Varun Sridharan <varunsridharan23@gmail.com>
+ * @package [package]
+ * @subpackage [package]/core
+ * @since [version]
  */
 if ( ! defined( 'WPINC' ) ) { die; }
 

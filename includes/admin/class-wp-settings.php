@@ -10,105 +10,19 @@
 if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_WP_Settings' ) ) {
 	class WooCommerce_Plugin_Boiler_Plate_WP_Settings {
 
-		/**
-		 * Version of WP_Settings_Settings class
-		 *
-		 * @since 2.0
-		 * @var
-		 */
 		public $version = 2.0;
-
-		/**
-		 * Current settings page.
-		 *
-		 * @since 2.0
-		 * @var array
-		 */
 		public $current_page = array();
-
-		/**
-		 * Debug errors and notices.
-		 *
-		 * @since 2.0
-		 * @var string
-		 */
 		public $debug = '';
-
-		/**
-		 * Admin pages.
-		 *
-		 * @since 2.0
-		 * @var array
-		 */
 		private $pages = array();
-
-		/**
-		 * Admin pages.
-		 *
-		 * @since 2.0
-		 * @var array
-		 */
 		private $fields;
-
-		/**
-		 * Unique plugin admin page hook suffix.
-		 *
-		 * @since 2.0
-		 * @var array
-		 */
 		private $page_hook;
-
-		/**
-		 * Fields that need Javascript. (e.g. colorpicker)
-		 *
-		 * @since 2.0
-		 * @var array
-		 */
 		private $script_types;
-
-		/**
-		 * Fields that need the label_argument in add_settings_field()
-		 *
-		 * @since 2.0
-		 * @var array
-		 */
 		private $label_for = array( 'text', 'select', 'textarea' );
-
-		/**
-		 * array of Javascrips needed for the current settings page
-		 *
-		 * @since 2.0
-		 * @var array
-		 */
 		private $load_scripts = array();
-
-		/**
-		 * Multiple forms on one settings page.
-		 *
-		 * @since 2.0
-		 * @var bool
-		 */
 		private $multiple_forms = false;
-
-		/**
-		 * valid admin pages and fields arrays.
-		 *
-		 * @since 2.0
-		 * @var bool
-		 */
 		private $valid_pages = false;
 
-
-		/**
-		 * Registers settings using the WorPres settings Api.
-		 *
-		 * @uses WP_Settings_Settings_Fields class
-		 * @since 2.0   *
-		 * @param array   $pages     Array with admin pages.
-		 * @param string  $page_hook Unique plugin admin page hook suffix.
-		 */
-		public function init( $pages, $page_hook = '' ) {
-
+        public function init( $pages, $page_hook = '' ) {
 			$this->pages = (array) $pages;
 			$this->page_hook = trim( sanitize_title( (string) $page_hook ) );
 

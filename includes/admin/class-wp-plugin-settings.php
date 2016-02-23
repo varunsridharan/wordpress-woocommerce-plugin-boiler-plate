@@ -27,9 +27,9 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Options {
     
     
     function admin_menu() {
-		$this->page_hook = add_submenu_page('edit.php?post_type=page',
-											__('Settings Page',PLUGIN_TXT),
-											__('Settings Page',PLUGIN_TXT),
+		$this->page_hook = add_submenu_page('options-general.php',
+											__('Boiler Plate Settings Page',PLUGIN_TXT),
+											__('Boiler Plate Settings Page',PLUGIN_TXT),
 											'administrator',PLUGIN_SLUG.'-settings', array( $this, 'admin_page' ) );
 	}
     

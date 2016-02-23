@@ -1,15 +1,15 @@
 <?php
 /**
- * WooCommerce Uninstall
+ * Summary (no period for file headers)
  *
- * Uninstalling WooCommerce deletes user roles, pages, tables, and options.
+ * Description. (use period)
  *
- * @author      WooThemes
- * @category    Core
- * @package     WooCommerce/Uninstaller
- * @version     2.3.0
+ * @link [plugin_url]
+ *
+ * @package [package]
+ * @subpackage [package]/uninstall
+ * @since [version]
  */
-
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
