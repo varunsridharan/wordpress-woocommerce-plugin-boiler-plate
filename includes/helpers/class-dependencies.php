@@ -1,9 +1,16 @@
 <?php
 /**
- * WC Dependency Checker
+ * Dependency Checker
  *
- * Checks if WooCommerce is enabled
+ * Checks if required Dependency plugin is enabled
+ *
+ * @link [plugin_url]
+ *
+ * @package [package]
+ * @subpackage [package]/core
+ * @since [version]
  */
+
 if ( ! class_exists( 'WooCommerce_Plugin_Boiler_Plate_Dependencies' ) ){
     class WooCommerce_Plugin_Boiler_Plate_Dependencies {
 		
@@ -16,7 +23,8 @@ if ( ! class_exists( 'WooCommerce_Plugin_Boiler_Plate_Dependencies' ) ){
         }
 		
         public static function active_check($pluginToCheck = '') {
-            if ( ! self::$active_plugins ) self::init();
+            if ( ! self::$active_plugins ) 
+				self::init();
             return in_array($pluginToCheck, self::$active_plugins) || array_key_exists($pluginToCheck, self::$active_plugins);
         }
     }

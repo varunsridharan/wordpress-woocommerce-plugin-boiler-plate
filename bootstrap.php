@@ -1,5 +1,13 @@
 <?php 
-
+/**
+ * Plugin Main File
+ *
+ * @link [plugin_url]
+ *
+ * @package [package]
+ * @subpackage [package]/core
+ * @since [version]
+ */
 if ( ! defined( 'WPINC' ) ) { die; }
  
 class WooCommerce_Plugin_Boiler_Plate {
@@ -26,21 +34,44 @@ class WooCommerce_Plugin_Boiler_Plate {
      */
     public function __construct() {
         $this->define_constant();
-		$this->set_vars();
         $this->load_required_files();
         $this->init_class();
         add_action('plugins_loaded', array( $this, 'after_plugins_loaded' ));
         add_filter('load_textdomain_mofile',  array( $this, 'load_plugin_mo_files' ), 10, 2);
     }
-    
+	
+	/**
+	 * Throw error on object clone.
+	 *
+	 * Cloning instances of the class is forbidden.
+	 *
+	 * @since 1.0
+	 * @return void
+	 */
+	public function __clone() {
+		_doing_it_wrong( __FUNCTION__, __( 'Cloning instances of the class is forbidden.', PLUGIN_TXT), PLUGIN_V );
+	}	
+
+	/**
+	 * Disable unserializing of the class
+	 *
+	 * Unserializing instances of the class is forbidden.
+	 *
+	 * @since 1.0
+	 * @return void
+	 */
+	public function __wakeup() {
+		_doing_it_wrong( __FUNCTION__, __( 'Unserializing instances of the class is forbidden.',PLUGIN_TXT), PLUGIN_V);
+	}
+
     /**
      * Loads Required Plugins For Plugin
      */
     private function load_required_files(){
-       $this->load_files(PLUGIN_INC.'class-common-*.php');
-	   $this->load_files(PLUGIN_ADMIN.'class-wp-*.php');
+       $this->load_files(PLUGIN_INC.'class-*.php');
+	   $this->load_files(PLUGIN_ADMIN.'settings_framework/class-wp-*.php');
         
-       if($this->is_request('admin')){
+       if(wc_pbp_is_request('admin')){
            $this->load_files(PLUGIN_ADMIN.'class-*.php');
        } 
 
@@ -51,9 +82,9 @@ class WooCommerce_Plugin_Boiler_Plate {
      */
     private function init_class(){
         self::$functions = new WooCommerce_Plugin_Boiler_Plate_Functions;
-		self::$settings = new WooCommerce_Plugin_Boiler_Plate_WP_Settings; 
+		self::$settings = new WooCommerce_Plugin_Boiler_Plate_Admin_Options; 
 
-        if($this->is_request('admin')){
+        if(wc_pbp_is_request('admin')){
             self::$admin = new WooCommerce_Plugin_Boiler_Plate_Admin;
         }
     }
@@ -107,18 +138,17 @@ class WooCommerce_Plugin_Boiler_Plate {
         $this->define('PLUGIN_NAME', 'WooCommerce Plugin Boiler Plate'); # Plugin Name
         $this->define('PLUGIN_SLUG', 'woocommerce-plugin-boiler-plate'); # Plugin Slug
         $this->define('PLUGIN_TXT',  'woocommerce-plugin-boiler-plate'); #plugin lang Domain
-		$this->define('PLUGIN_DB', 'wc_pbp');
+		$this->define('PLUGIN_DB', 'wc_pbp_');
 		$this->define('PLUGIN_V',$this->version); # Plugin Version
-		$this->define('PLUGIN_PATH',plugin_dir_path( __FILE__ )); # Plugin DIR
+		
 		$this->define('PLUGIN_LANGUAGE_PATH',PLUGIN_PATH.'languages'); # Plugin Language Folder
-		$this->define('PLUGIN_INC',PLUGIN_PATH.'includes/'); # Plugin INC Folder
 		$this->define('PLUGIN_ADMIN',PLUGIN_INC.'admin/'); # Plugin Admin Folder
-		$this->define('PLUGIN_SETTINGS',PLUGIN_INC.'admin/settings/'); # Plugin Settings Folder
+		$this->define('PLUGIN_SETTINGS',PLUGIN_ADMIN.'settings/'); # Plugin Settings Folder
+		
 		$this->define('PLUGIN_URL',plugins_url('', __FILE__ ).'/');  # Plugin URL
 		$this->define('PLUGIN_CSS',PLUGIN_URL.'includes/css/'); # Plugin CSS URL
 		$this->define('PLUGIN_IMG',PLUGIN_URL.'includes/img/'); # Plugin IMG URL
 		$this->define('PLUGIN_JS',PLUGIN_URL.'includes/js/'); # Plugin JS URL
-        $this->define('PLUGIN_FILE',plugin_basename( __FILE__ )); # Current File
     }
 	
     /**
@@ -132,24 +162,5 @@ class WooCommerce_Plugin_Boiler_Plate {
         }
     }
     
-	 
-									 
-	/**
-	 * What type of request is this?
-	 * string $type ajax, frontend or admin
-	 * @return bool
-	 */
-	private function is_request( $type ) {
-		switch ( $type ) {
-			case 'admin' :
-				return is_admin();
-			case 'ajax' :
-				return defined( 'DOING_AJAX' );
-			case 'cron' :
-				return defined( 'DOING_CRON' );
-			case 'frontend' :
-				return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
-		}
-	}
 }
 ?>

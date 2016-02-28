@@ -27,9 +27,9 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Options {
     
     
     function admin_menu() {
-		$this->page_hook = add_submenu_page('edit.php?post_type=page',
-											__('Settings Page',PLUGIN_TXT),
-											__('Settings Page',PLUGIN_TXT),
+		$this->page_hook = add_submenu_page('tools.php',
+											__('Boiler Plate Settings Page',PLUGIN_TXT),
+											__('Boiler Plate Settings Page',PLUGIN_TXT),
 											'administrator',PLUGIN_SLUG.'-settings', array( $this, 'admin_page' ) );
 	}
     
@@ -60,7 +60,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Options {
                         $this->create_function[] =  $s[$a]['id'];
                         $s[$a]['validate_callback'] = '';
                         $file = addslashes(PLUGIN_SETTINGS.'validate-'.$s[$a]['id'].'.php');
-                        $s[$a]['validate_callback'] = create_function('$fields', 'global $send_fields; $send_fields =  $fields; if(file_exists("'.$file.'")) { require("'.$file.'"); } return $fields;');
+                         $s[$a]['validate_callback'] = create_function('$fields', 'do_action("wc_pbp_settings_validate",$fields); do_action("wc_pbp_settings_validate_'.$s[$a]['id'].'",$fields);');
                     }
                     $a++;
                 }
