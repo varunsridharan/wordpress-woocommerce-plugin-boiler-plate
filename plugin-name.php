@@ -1,0 +1,84 @@
+<?php 
+/**
+ * The plugin bootstrap file
+ *
+ * This file is read by WordPress to generate the plugin information in the plugin
+ * admin area. This file also includes all of the dependencies used by the plugin,
+ * registers the activation and deactivation functions, and defines a function
+ * that starts the plugin.
+ *
+ * @link              http://example.com
+ * @since             1.0.0
+ * @package           Plugin_Name
+ *
+ * @wordpress-plugin
+ * Plugin Name:       WooCommerce Plugin Boiler Plate
+ * Plugin URI:        https://wordpress.org/plugins/woocommerce-plugin-boiler-plate/
+ * Description:       Sample Plugin For WooCommerce
+ * Version:           0.1
+ * Author:            Varun Sridharan
+ * Author URI:        http://varunsridharan.in
+ * License:           GPL-2.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain:       woocommerce-plugin-boiler-plate
+ * Domain Path:       /languages
+ */
+
+if ( ! defined( 'WPINC' ) ) { die; }
+ 
+define('PLUGIN_FILE',plugin_basename( __FILE__ ));
+define('PLUGIN_PATH',plugin_dir_path( __FILE__ )); # Plugin DIR
+define('PLUGIN_INC',PLUGIN_PATH.'includes/'); # Plugin INC Folder
+define('PLUGIN_DEPEN','woocommerce/woocommerce.php');
+
+register_activation_hook( __FILE__, 'activate_plugin_name' );
+register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
+register_deactivation_hook( PLUGIN_DEPEN, 'dependency_plugin_deactivate' );
+
+
+
+/**
+ * The code that runs during plugin activation.
+ * This action is documented in includes/class-plugin-name-activator.php
+ */
+function activate_plugin_name() {
+	require_once(PLUGIN_INC.'helpers/class-activator.php');
+	WooCommerce_Plugin_Boiler_Plate_Activator::activate();
+}
+
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-plugin-name-deactivator.php
+ */
+function deactivate_plugin_name() {
+	require_once(PLUGIN_INC.'helpers/class-deactivator.php');
+	WooCommerce_Plugin_Boiler_Plate_Deactivator::deactivate();
+}
+
+
+/**
+ * The code that runs during plugin deactivation.
+ * This action is documented in includes/class-plugin-name-deactivator.php
+ */
+function dependency_plugin_deactivate() {
+	require_once(PLUGIN_INC.'helpers/class-deactivator.php');
+	WooCommerce_Plugin_Boiler_Plate_Deactivator::dependency_deactivate();
+}
+
+
+
+
+//if(WooCommerce_Plugin_Boiler_Plate_Dependencies()){
+	
+    require_once(PLUGIN_INC.'functions.php');
+    require_once(plugin_dir_path(__FILE__).'bootstrap.php');
+	
+	if(!function_exists('WooCommerce_Plugin_Boiler_Plate')){
+		function WooCommerce_Plugin_Boiler_Plate(){
+			return WooCommerce_Plugin_Boiler_Plate::get_instance();
+		}
+	}
+	WooCommerce_Plugin_Boiler_Plate();
+//}
+
+?>
