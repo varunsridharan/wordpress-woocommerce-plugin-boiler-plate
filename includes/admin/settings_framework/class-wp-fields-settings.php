@@ -3,9 +3,14 @@
  * class for form fields display.
  * For detailed instructions see: https://github.com/keesiemeijer/WP-Settings
  *
+ * @link [plugin_url]
+ * @package [package]
+ * @subpackage [package]/WordPress/Settings
+ * @since [version]
  * @version 0.1
  * @author keesiemeijer
  */
+if ( ! defined( 'WPINC' ) ) { die; }
 if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_WP_Settings_Fields' ) ) {
 	class WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields {
 

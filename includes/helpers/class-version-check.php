@@ -2,7 +2,10 @@
 /**
  * Check the version of WordPress
  *
- * @since  1.0.0
+ * @link [plugin_url]
+ * @package [package]
+ * @subpackage [package]/core
+ * @since [version]
  */
 class WooCommerce_Plugin_Boiler_Plate_Version_Check {
     static $version;

@@ -2,15 +2,12 @@
 /**
  * WooCommerce General Settings
  *
- * @author      WooThemes
- * @category    Admin
- * @package     WooCommerce/Admin
- * @version     2.1.0
+ * @link [plugin_url]
+ * @package [package]
+ * @subpackage [package]/Admin/WC_Settings
+ * @since [version]
  */
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly
-}
+if ( ! defined( 'WPINC' ) ) { die; }
 
 if ( ! class_exists( 'WooCommerce_Simple_Settings' ) ) :
 

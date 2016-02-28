@@ -1,4 +1,16 @@
 <?php
+/**
+ * Class for registering settings and sections and for display of the settings form(s).
+ * For detailed instructions see: https://github.com/keesiemeijer/WP-Settings
+ *
+ * @link [plugin_url]
+ * @package [package]
+ * @subpackage [package]/WordPress/Settings
+ * @since [version]
+ * @version 2.0
+ * @author keesiemeijer
+ */
+if ( ! defined( 'WPINC' ) ) { die; }
 class WooCommerce_Plugin_Boiler_Plate_Admin_Options {
     private $page_hook = '';
     public $settings;

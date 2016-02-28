@@ -18,11 +18,9 @@ A Simple Plugin Boiler Plate for woocommerce
 A Simple Plugin Boiler Plate for woocommerce 
 
 == Screenshots ==
- 
 == Upgrade Notice ==
-
 == Frequently Asked Questions == 
- 
+
 == Installation ==
 
 = Minimum Requirements =

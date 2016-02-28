@@ -1,22 +1,13 @@
-<?php
-/**
- * Fired during plugin activation
- *
- * @link       http://example.com
- * @since      1.0.0
- *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- */
+<?php 
 /**
  * Fired during plugin activation.
  *
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @link [plugin_url]
+ * @package [package]
+ * @subpackage [package]/core
+ * @since [version]
  */
 class WooCommerce_Plugin_Boiler_Plate_Activator {
 	

@@ -5,7 +5,6 @@
  * Checks if required Dependency plugin is enabled
  *
  * @link [plugin_url]
- *
  * @package [package]
  * @subpackage [package]/core
  * @since [version]

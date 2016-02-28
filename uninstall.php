@@ -5,9 +5,8 @@
  * Description. (use period)
  *
  * @link [plugin_url]
- *
  * @package [package]
- * @subpackage [package]/uninstall
+ * @subpackage [package]/core
  * @since [version]
  */
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {

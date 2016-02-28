@@ -3,14 +3,13 @@
  * Plugin's Admin code
  *
  * @link [plugin_url]
- *
  * @package [package]
- * @subpackage [package]/core
+ * @subpackage [package]/Admin
  * @since [version]
  */
 if ( ! defined( 'WPINC' ) ) { die; }
 
-class WooCommerce_Plugin_Boiler_Plate_Admin extends WooCommerce_Plugin_Boiler_Plate {
+class WooCommerce_Plugin_Boiler_Plate_Admin {
 
     /**
 	 * Initialize the class and set its properties.

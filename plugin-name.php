@@ -7,15 +7,15 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              http://example.com
- * @since             1.0.0
- * @package           Plugin_Name
+ * @link              [plugin_url]
+ * @since             [version]
+ * @package           [plugin_name]
  *
  * @wordpress-plugin
  * Plugin Name:       WooCommerce Plugin Boiler Plate
- * Plugin URI:        https://wordpress.org/plugins/woocommerce-plugin-boiler-plate/
+ * Plugin URI:        [plugin_url]
  * Description:       Sample Plugin For WooCommerce
- * Version:           0.1
+ * Version:           [version]
  * Author:            Varun Sridharan
  * Author URI:        http://varunsridharan.in
  * License:           GPL-2.0+

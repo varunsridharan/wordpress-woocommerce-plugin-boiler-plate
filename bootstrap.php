@@ -3,7 +3,6 @@
  * Plugin Main File
  *
  * @link [plugin_url]
- *
  * @package [package]
  * @subpackage [package]/core
  * @since [version]
@@ -11,7 +10,7 @@
 if ( ! defined( 'WPINC' ) ) { die; }
  
 class WooCommerce_Plugin_Boiler_Plate {
-	public $version = '0.1';
+	public $version = '[version]';
 	public $plugin_vars = array();
 	
 	protected static $_instance = null; # Required Plugin Class Instance

@@ -1,4 +1,14 @@
 <?php
+/**
+ * Common Plugin Functions
+ * 
+ * @link [plugin_url]
+ * @package [package]
+ * @subpackage [package]/core
+ * @since [version]
+ */
+if ( ! defined( 'WPINC' ) ) { die; }
+
 if(!function_exists('wc_pbp_is_request')){
     /**
 	 * What type of request is this?
