@@ -31,9 +31,9 @@ define('PLUGIN_PATH',plugin_dir_path( __FILE__ )); # Plugin DIR
 define('PLUGIN_INC',PLUGIN_PATH.'includes/'); # Plugin INC Folder
 define('PLUGIN_DEPEN','woocommerce/woocommerce.php');
 
-register_activation_hook( __FILE__, 'activate_plugin_name' );
-register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
-register_deactivation_hook( PLUGIN_DEPEN, 'dependency_plugin_deactivate' );
+register_activation_hook( __FILE__, 'wc_pbp_activate_plugin' );
+register_deactivation_hook( __FILE__, 'wc_pbp_deactivate_plugin' );
+register_deactivation_hook( PLUGIN_DEPEN, 'wc_pbp_dependency_deactivate' );
 
 
 
@@ -41,7 +41,7 @@ register_deactivation_hook( PLUGIN_DEPEN, 'dependency_plugin_deactivate' );
  * The code that runs during plugin activation.
  * This action is documented in includes/class-plugin-name-activator.php
  */
-function activate_plugin_name() {
+function wc_pbp_activate_plugin() {
 	require_once(PLUGIN_INC.'helpers/class-activator.php');
 	WooCommerce_Plugin_Boiler_Plate_Activator::activate();
 }
@@ -50,7 +50,7 @@ function activate_plugin_name() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-plugin-name-deactivator.php
  */
-function deactivate_plugin_name() {
+function wc_pbp_deactivate_plugin() {
 	require_once(PLUGIN_INC.'helpers/class-deactivator.php');
 	WooCommerce_Plugin_Boiler_Plate_Deactivator::deactivate();
 }
@@ -60,7 +60,7 @@ function deactivate_plugin_name() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-plugin-name-deactivator.php
  */
-function dependency_plugin_deactivate() {
+function wc_pbp_dependency_deactivate() {
 	require_once(PLUGIN_INC.'helpers/class-deactivator.php');
 	WooCommerce_Plugin_Boiler_Plate_Deactivator::dependency_deactivate();
 }

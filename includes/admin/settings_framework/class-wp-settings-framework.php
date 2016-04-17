@@ -3,15 +3,15 @@
  * Class for registering settings and sections and for display of the settings form(s).
  * For detailed instructions see: https://github.com/keesiemeijer/WP-Settings
  *
- * @link [plugin_url]
- * @package [package]
- * @subpackage [package]/WordPress/Settings
- * @since [version]
+ * @link https://wordpress.org/plugins/woocommerce-role-based-price/
+ * @package WooCommerce Role Based Price
+ * @subpackage WooCommerce Role Based Price/WordPress/Settings
+ * @since 3.0
  * @version 2.0
  * @author keesiemeijer
  */
 if ( ! defined( 'WPINC' ) ) { die; }
-class WooCommerce_Plugin_Boiler_Plate_Admin_Options {
+class WooCommerce_Plugin_Boiler_Plate_Settings_Framework {
     private $page_hook = '';
     public $settings;
     private $settings_page;
@@ -26,40 +26,43 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Options {
         $this->settings_fields = array();
         $this->create_function = array();
         $this->add_settings_pages();
-        $this->get_settings();
+        //$this->get_settings();
         $this->add_settings_section();
         $this->create_callback_function();
 		$this->page_hook = $page_hook;
         
-        if(empty($page_hook)) {
-            add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-        }
+        if(empty($page_hook)) { add_action( 'admin_menu', array( $this, 'admin_menu' ) ); }
         add_action( 'admin_init', array( $this, 'admin_init' ) );
     }
     
     
     function admin_menu() {
-		$this->page_hook = add_submenu_page('tools.php',
-											__('Boiler Plate Settings Page',PLUGIN_TXT),
-											__('Boiler Plate Settings Page',PLUGIN_TXT),
-											'administrator',PLUGIN_SLUG.'-settings', array( $this, 'admin_page' ) );
+		$this->page_hook = add_submenu_page('woocommerce',
+											__('Boiler Plate Settings',PLUGIN_TXT),
+											__('Boiler Plate Settings',PLUGIN_TXT),
+											'manage_woocommerce',PLUGIN_SLUG.'-settings', array( $this, 'admin_page' ) );
 	}
     
     
     private function add_settings_pages(){
-        global $pages;
-        $pages =  array();
-        include(PLUGIN_SETTINGS.'pages.php');
+		$pages = array();
+		$pages = apply_filters('wc_pbp_settings_pages',$pages);
         $this->settings_page = $pages;
     }
     
     private function add_settings_section(){
-        global $section;
         $section =  array();
-        include(PLUGIN_SETTINGS.'section.php');
+        $section = apply_filters('wc_pbp_settings_section',$section);
         $this->settings_section = $section;
     }
     
+    private function add_settings_fields(){
+        global $fields;
+        $fields =  array();
+		$fields = apply_filters('wc_pbp_settings_fields',$fields);
+        $this->settings_field = $fields;
+    }
+	
     private function create_callback_function(){
         $sec = $this->settings_section;
         
@@ -71,7 +74,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Options {
                     if(isset($s[$a]['validate_callback'])){
                         $this->create_function[] =  $s[$a]['id'];
                         $s[$a]['validate_callback'] = '';
-                        $file = addslashes(PLUGIN_SETTINGS.'validate-'.$s[$a]['id'].'.php');
+                        $file = addslashes(PUGIN_SETTINGS.'validate-'.$s[$a]['id'].'.php');
                          $s[$a]['validate_callback'] = create_function('$fields', 'do_action("wc_pbp_settings_validate",$fields); do_action("wc_pbp_settings_validate_'.$s[$a]['id'].'",$fields);');
                     }
                     $a++;
@@ -83,12 +86,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Options {
     } 
     
     
-    private function add_settings_fields(){
-        global $fields;
-        $fields =  array();
-        include(PLUGIN_SETTINGS.'fields.php');
-        $this->settings_field = $fields;
-    }
+
 
     function admin_init(){ 
 		$this->settings = new WooCommerce_Plugin_Boiler_Plate_WP_Settings();
@@ -123,7 +121,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Options {
 		echo '<div class="wrap wc_qd_settings">';
 		settings_errors();
 		$this->settings->render_header();
-		echo $this->settings->debug;
+		//echo $this->settings->debug;
 		$this->settings->render_form();
 		echo '</div>';
 	}

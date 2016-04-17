@@ -1,17 +1,16 @@
 <?php
 /**
- * class for form fields display.
+ * Class for registering settings and sections and for display of the settings form(s).
  * For detailed instructions see: https://github.com/keesiemeijer/WP-Settings
  *
- * @link [plugin_url]
- * @package [package]
- * @subpackage [package]/WordPress/Settings
- * @since [version]
- * @version 0.1
+ * @link https://wordpress.org/plugins/woocommerce-role-based-price/
+ * @package WooCommerce Role Based Price
+ * @subpackage WooCommerce Role Based Price/WordPress/Settings
+ * @since 3.0
+ * @version 2.0
  * @author keesiemeijer
  */
-if ( ! defined( 'WPINC' ) ) { die; }
-if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_WP_Settings_Fields' ) ) {
+if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields' ) ) {
 	class WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields {
 
 		public $version = 2.0;

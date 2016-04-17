@@ -3,30 +3,115 @@
  * Class for registering settings and sections and for display of the settings form(s).
  * For detailed instructions see: https://github.com/keesiemeijer/WP-Settings
  *
- * @link [plugin_url]
- * @package [package]
- * @subpackage [package]/WordPress/Settings
- * @since [version]
+ * @link https://wordpress.org/plugins/woocommerce-role-based-price/
+ * @package WooCommerce Role Based Price
+ * @subpackage WooCommerce Role Based Price/WordPress/Settings
+ * @since 3.0
  * @version 2.0
  * @author keesiemeijer
  */
-if ( ! defined( 'WPINC' ) ) { die; }
 if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_WP_Settings' ) ) {
 	class WooCommerce_Plugin_Boiler_Plate_WP_Settings {
 
+		/**
+		 * Version of WP_Settings_Settings class
+		 *
+		 * @since 2.0
+		 * @var
+		 */
 		public $version = 2.0;
+
+		/**
+		 * Current settings page.
+		 *
+		 * @since 2.0
+		 * @var array
+		 */
 		public $current_page = array();
+
+		/**
+		 * Debug errors and notices.
+		 *
+		 * @since 2.0
+		 * @var string
+		 */
 		public $debug = '';
+
+		/**
+		 * Admin pages.
+		 *
+		 * @since 2.0
+		 * @var array
+		 */
 		private $pages = array();
+
+		/**
+		 * Admin pages.
+		 *
+		 * @since 2.0
+		 * @var array
+		 */
 		private $fields;
+
+		/**
+		 * Unique plugin admin page hook suffix.
+		 *
+		 * @since 2.0
+		 * @var array
+		 */
 		private $page_hook;
+
+		/**
+		 * Fields that need Javascript. (e.g. colorpicker)
+		 *
+		 * @since 2.0
+		 * @var array
+		 */
 		private $script_types;
+
+		/**
+		 * Fields that need the label_argument in add_settings_field()
+		 *
+		 * @since 2.0
+		 * @var array
+		 */
 		private $label_for = array( 'text', 'select', 'textarea' );
+
+		/**
+		 * array of Javascrips needed for the current settings page
+		 *
+		 * @since 2.0
+		 * @var array
+		 */
 		private $load_scripts = array();
+
+		/**
+		 * Multiple forms on one settings page.
+		 *
+		 * @since 2.0
+		 * @var bool
+		 */
 		private $multiple_forms = false;
+
+		/**
+		 * valid admin pages and fields arrays.
+		 *
+		 * @since 2.0
+		 * @var bool
+		 */
 		private $valid_pages = false;
 
-        public function init( $pages, $page_hook = '' ) {
+
+		/**
+		 * Registers settings using the WorPres settings Api.
+		 *
+		 * @uses WP_Settings_Settings_Fields class
+		 * @since 2.0   *
+		 * @param array   $pages     Array with admin pages.
+		 * @param string  $page_hook Unique plugin admin page hook suffix.
+		 */
+		public function init( $pages, $page_hook = '' ) {
+
 			$this->pages = (array) $pages;
 			$this->page_hook = trim( sanitize_title( (string) $page_hook ) );
 
@@ -558,7 +643,7 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_WP_Settings' ) ) {
 					echo apply_filters( "{$this->page_hook}_form_fields", '', $form['id'], $form );
 
 					settings_fields( $this->page_hook .''. $form['id'] );
-					do_settings_sections( $this->page_hook .''. $form['id'] );
+					$this->do_settings_sections( $this->page_hook .''. $form['id'] );
 
 					$submit = ( isset( $form['submit'] ) && $form['submit'] ) ? $form['submit'] : '';
 
@@ -576,6 +661,51 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_WP_Settings' ) ) {
 				}
 			}
 		} // render_form()
+        
+        
+        /**
+         * Prints out all settings sections added to a particular settings page
+         *
+         * Part of the Settings API. Use this in a settings page callback function
+         * to output all the sections and fields that were added to that $page with
+         * add_settings_section() and add_settings_field()
+         *
+         * @global $wp_settings_sections Storage array of all settings sections added to admin pages
+         * @global $wp_settings_fields Storage array of settings fields and info about their pages/sections
+         * @since 2.7.0
+         *
+         * @param string $page The slug name of the page whose settings sections you want to output
+         */
+        function do_settings_sections( $page ) {
+            global $wp_settings_sections, $wp_settings_fields;
+
+            if ( ! isset( $wp_settings_sections[$page] ) )
+                return;
+            $section_count = count($wp_settings_sections[$page]);
+            if($section_count > 1){
+                echo '<ul class="subsubsub wc_pbp_settings_submenu">';
+                foreach ( (array) $wp_settings_sections[$page] as $section ) {
+                    echo '<li> <a href="#'.$section['id'].'">'.$section['title'].'</a> | </li>';
+                }	
+                echo '</ul> <br/>';
+            }
+
+            foreach ( (array) $wp_settings_sections[$page] as $section ) {
+                if($section_count > 1){ echo '<div id="settings_'.$section['id'].'" class="hidden wc_pbp_settings_content">'; }
+                    if ( $section['title'] )
+                        echo "<h2>{$section['title']}</h2>\n";
+
+                    if ( $section['callback'] )
+                        call_user_func( $section['callback'], $section );
+
+                    if ( ! isset( $wp_settings_fields ) || !isset( $wp_settings_fields[$page] ) || !isset( $wp_settings_fields[$page][$section['id']] ) )
+                        continue;
+                    echo '<table class="form-table">';
+                    do_settings_fields( $page, $section['id'] );
+                    echo '</table>';
+                if($section_count > 1){echo '</div>';}
+            }
+        }        
 
 	} // class
 } // class exists

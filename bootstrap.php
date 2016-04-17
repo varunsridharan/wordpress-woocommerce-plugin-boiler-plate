@@ -81,7 +81,7 @@ class WooCommerce_Plugin_Boiler_Plate {
      */
     private function init_class(){
         self::$functions = new WooCommerce_Plugin_Boiler_Plate_Functions;
-		self::$settings = new WooCommerce_Plugin_Boiler_Plate_Admin_Options; 
+		self::$settings = new WooCommerce_Plugin_Boiler_Plate_Settings_Framework; 
 
         if(wc_pbp_is_request('admin')){
             self::$admin = new WooCommerce_Plugin_Boiler_Plate_Admin;
@@ -143,11 +143,18 @@ class WooCommerce_Plugin_Boiler_Plate {
 		$this->define('PLUGIN_LANGUAGE_PATH',PLUGIN_PATH.'languages'); # Plugin Language Folder
 		$this->define('PLUGIN_ADMIN',PLUGIN_INC.'admin/'); # Plugin Admin Folder
 		$this->define('PLUGIN_SETTINGS',PLUGIN_ADMIN.'settings/'); # Plugin Settings Folder
-		
+		$this->define('PLUGIN_ADDON',PLUGIN_PATH.'addons/');
+        
 		$this->define('PLUGIN_URL',plugins_url('', __FILE__ ).'/');  # Plugin URL
 		$this->define('PLUGIN_CSS',PLUGIN_URL.'includes/css/'); # Plugin CSS URL
 		$this->define('PLUGIN_IMG',PLUGIN_URL.'includes/img/'); # Plugin IMG URL
 		$this->define('PLUGIN_JS',PLUGIN_URL.'includes/js/'); # Plugin JS URL
+        
+        
+        $this->define('PLUGIN_ADDON_URL',PLUGIN_URL.'addons/');  # Plugin URL
+		$this->define('PLUGIN_ADDON_CSS',PLUGIN_ADDON_URL.'includes/css/'); # Plugin CSS URL
+		$this->define('PLUGIN_ADDON_IMG',PLUGIN_ADDON_URL.'includes/img/'); # Plugin IMG URL
+		$this->define('PLUGIN_ADDON_JS',PLUGIN_ADDON_URL.'includes/js/'); # Plugin JS URL
     }
 	
     /**

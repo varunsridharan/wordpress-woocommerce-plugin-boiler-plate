@@ -23,13 +23,21 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
         add_filter( 'plugin_row_meta', array($this, 'plugin_row_links' ), 10, 2 );
         add_filter( 'plugin_action_links_'.PLUGIN_FILE, array($this,'plugin_action_links'),10,10);
         add_filter( 'woocommerce_get_settings_pages',  array($this,'settings_page') ); 
+        add_filter( 'woocommerce_screen_ids',array($this,'set_wc_screen_ids'),99);
 	}
 
+    public function set_wc_screen_ids($screens){ 
+        $screen = $screens; 
+      	$screen[] = 'woocommerce_page_woocommerce-role-based-price-settings';
+        return $screen;
+    }
+    
     /**
      * Inits Admin Sttings
      */
     public function admin_init(){
-       # new WooCommerce_Plugin_Boiler_Plate_Admin_Sample_Class;
+        new WooCommerce_Plugin_Boiler_Plate_Admin_Ajax_Handler;
+        new WooCommerce_Plugin_Boiler_Plate_Addons;
     }
  
     
@@ -47,9 +55,18 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
 	 * Register the stylesheets for the admin area.
 	 */
 	public function enqueue_styles() { 
-        if(in_array(wc_pbp_current_screen() , wc_pbp_get_screen_ids())) {
-            wp_enqueue_style(PLUGIN_SLUG.'_backend_style',PLUGIN_CSS.'backend.css' , array(), PLUGIN_V, 'all' );  
+        $current_screen = wc_pbp_current_screen();
+        $addon_url = admin_url('admin-ajax.php?action=wc_pbp_addon_custom_css');
+        
+        wp_register_style(PLUGIN_SLUG.'_backend_style',PLUGIN_CSS.'backend.css' , array(), PLUGIN_V, 'all' );  
+        wp_register_style(PLUGIN_SLUG.'_addons_style',$addon_url , array(), PLUGIN_V, 'all' );  
+        
+        if(in_array($current_screen , wc_pbp_get_screen_ids())) {
+            wp_enqueue_style(PLUGIN_SLUG.'_backend_style');  
+            wp_enqueue_style(PLUGIN_SLUG.'_addons_style');  
         }
+        
+        do_action('wc_pbp_admin_styles',$current_screen);
 	}
 	
     
@@ -57,9 +74,19 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
 	 * Register the JavaScript for the admin area.
 	 */
 	public function enqueue_scripts() {
-        if(in_array(wc_pbp_current_screen() , wc_pbp_get_screen_ids())) {
-            wp_enqueue_script(PLUGIN_SLUG.'_backend_script', PLUGIN_JS.'backend.js', array('jquery'), PLUGIN_V, false ); 
-        }
+        $current_screen = wc_pbp_current_screen();
+        $addon_url = admin_url('admin-ajax.php?action=wc_pbp_addon_custom_js');
+        
+        wp_register_script(PLUGIN_SLUG.'_backend_script', PLUGIN_JS.'backend.js', array('jquery'), PLUGIN_V, false ); 
+        wp_register_script(PLUGIN_SLUG.'_addons_script', $addon_url, array('jquery'), PLUGIN_V, false ); 
+        
+        
+        if(in_array($current_screen , wc_pbp_get_screen_ids())) {
+            wp_enqueue_script(PLUGIN_SLUG.'_backend_script' ); 
+            wp_enqueue_script(PLUGIN_SLUG.'_addons_script' ); 
+        } 
+        
+        do_action('wc_pbp_admin_scripts',$current_screen); 
  
 	}
      
