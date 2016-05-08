@@ -74,19 +74,46 @@ class WooCommerce_Plugin_Boiler_Plate {
            $this->load_files(PLUGIN_ADMIN.'class-*.php');
        } 
 
+        do_action('wc_pbp_before_addons_load');
+		$this->load_addons();
     }
     
+	public function load_addons(){ 
+		$addons = wc_pbp_get_active_addons();
+		if(!empty($addons)){
+			foreach($addons as $addon){
+				if(apply_filters('wc_pbp_load_addon',true,$addon)){
+					do_action('wc_pbp_before_'.$addon.'_addon_load');
+					$this->load_addon($addon);
+					do_action('wc_pbp_after_'.$addon.'_addon_load');
+				}
+			}
+		}
+	}
+    
+	public function load_addon($file){
+		if(file_exists(PLUGIN_ADDON.$file)){
+			$this->load_files(PLUGIN_ADDON.$file);
+		} else if(file_exists($file = apply_filters('wc_pbp_addon_file_location',$file))) {
+			$this->load_files($file);
+		} else {
+			do_action('wc_pbp_addon_'.$file.'_load');
+		}
+	}
     /**
      * Inits loaded Class
      */
     private function init_class(){
+        do_action('wc_pbp_before_init');
         self::$functions = new WooCommerce_Plugin_Boiler_Plate_Functions;
 		self::$settings = new WooCommerce_Plugin_Boiler_Plate_Settings_Framework; 
 
         if(wc_pbp_is_request('admin')){
             self::$admin = new WooCommerce_Plugin_Boiler_Plate_Admin;
         }
+        do_action('wc_pbp_after_init');
     }
+    
     
 	# Returns Plugin's Functions Instance
 	public function func(){

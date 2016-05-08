@@ -19,7 +19,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Settings_Options {
 	public function settings_pages($page){
 		$page[] = array('id'=>'general','slug'=>'general','title'=>__('General',PLUGIN_TXT));
 		$page[] = array('id'=>'addonssettings','slug'=>'addonssettings','title'=>__('Add-ons Options',PLUGIN_TXT));
-		$page[] = array('id'=>'addons','slug'=>'wcrbpaddons','title'=>__('Add-ons',PLUGIN_TXT));
+		$page[] = array('id'=>'addons','slug'=>'wc_pbp_addons','title'=>__('Add-ons',PLUGIN_TXT));
 		return $page;
 	}
 	public function settings_section($section){

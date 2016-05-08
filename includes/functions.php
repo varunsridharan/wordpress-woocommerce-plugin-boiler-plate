@@ -258,7 +258,7 @@ if(!function_exists('wc_pbp_admin_notice')){
 
 if(!function_exists('wc_pbp_get_ajax_overlay')){
 	/**
-	 * Prints WC RBP Ajax Loading Code
+	 * Prints WC PBP Ajax Loading Code
 	 */
 	function wc_pbp_get_ajax_overlay($echo = true){
 		$return = '<div class="wc_pbp_ajax_overlay">

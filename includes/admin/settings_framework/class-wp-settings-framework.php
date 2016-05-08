@@ -118,7 +118,7 @@ class WooCommerce_Plugin_Boiler_Plate_Settings_Framework {
     
     
     public function admin_page(){
-		echo '<div class="wrap wc_qd_settings">';
+		echo '<div class="wrap wc_pbp_settings">';
 		settings_errors();
 		$this->settings->render_header();
 		//echo $this->settings->debug;
