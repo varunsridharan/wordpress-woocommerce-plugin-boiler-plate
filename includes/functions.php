@@ -96,8 +96,10 @@ if(!function_exists('wc_pbp_dependency_message')){
 }
 
 if(!function_exists('wc_pbp_get_template')){
-	function wc_bof_get_template($name,$args = array()){
-		wc_get_template( $name, $args ,'woocommerce/wcbulkorder', PLUGIN_PATH.'/templates/' );
+	function wc_pbp_get_template($name,$args = array(),$template_base = '',$remote_template = ''){
+        if(empty($template_base)){$template_base = PLUGIN_PATH.'/templates/';}
+        if(empty($remote_template)){$remote_template = 'woocommerce/wcbulkorder';}
+		wc_get_template( $name, $args ,$remote_template,  $template_base);
 	}
 }
 
@@ -256,6 +258,50 @@ if(!function_exists('wc_pbp_admin_notice')){
     }
 }
 
+if ( ! function_exists( 'wc_pbp_notice' ) ) {
+    function wc_pbp_notice( $message, $type = 'update',$args = array()) {
+        $notice = '';
+        $defaults = array('times' => 1,'screen' => array(),'users' => array(), 'wraper' => true);    
+        $args = wp_parse_args( $args, $defaults );
+        extract($args);
+        
+        if($type == 'error'){
+            $notice = new WooCommerce_Plugin_Boiler_Plate_Admin_Error_Notice($message,$times, $screen, $users);
+        }
+        
+        if($type == 'update'){
+            $notice = new WooCommerce_Plugin_Boiler_Plate_Admin_Updated_Notice($message,$times, $screen, $users);
+        }
+        
+        if($type == 'upgrade'){
+            $notice = new WooCommerce_Plugin_Boiler_Plate_Admin_UpdateNag_Notice($message,$times, $screen, $users);
+        } 
+        
+        $msgID = $notice->getId();
+        $message = str_replace('$msgID$',$msgID,$message);
+        $notice->setContent($message);
+        $notice->setWrapper($wraper);
+        WooCommerce_Plugin_Boiler_Plate_Admin_Notices::getInstance()->addNotice($notice);
+    }
+}
+
+if ( ! function_exists( 'wc_pbp_remove_link' ) ) {
+    function wc_pbp_remove_link($attributes = '',$msgID = '$msgID$', $text = 'Remove Notice') {
+        if(!empty($msgID)){
+            $removeKey = PLUGIN_DB.'MSG';
+            $url = admin_url().'?'.$removeKey.'='.$msgID ;
+            //$url = wp_nonce_url($url, 'WCQDREMOVEMSG');
+            $url = urldecode($url);
+            $tag = '<a '.$attributes.' href="'.$url.'">'.__($text,WC_PBP_TXT).'</a>';
+            return $tag;
+        }
+    }
+}
+
+
+
+
+
 if(!function_exists('wc_pbp_get_ajax_overlay')){
 	/**
 	 * Prints WC PBP Ajax Loading Code
@@ -273,4 +319,3 @@ if(!function_exists('wc_pbp_get_ajax_overlay')){
 		else{return $return;}
 	}
 }
-?>

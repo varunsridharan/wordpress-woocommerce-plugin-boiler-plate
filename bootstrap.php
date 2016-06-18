@@ -97,9 +97,16 @@ class WooCommerce_Plugin_Boiler_Plate {
 		} else if(file_exists($file = apply_filters('wc_pbp_addon_file_location',$file))) {
 			$this->load_files($file);
 		} else {
-			do_action('wc_pbp_addon_'.$file.'_load');
+            if(has_action('wc_pbp_addon_'.$file.'_load')){
+                do_action('wc_pbp_addon_'.$file.'_load');    
+            } else {
+                
+                wc_pbp_deactivate_addon($file);
+            }
+			
 		}
 	}
+   
     /**
      * Inits loaded Class
      */
@@ -196,4 +203,3 @@ class WooCommerce_Plugin_Boiler_Plate {
     }
     
 }
-?>

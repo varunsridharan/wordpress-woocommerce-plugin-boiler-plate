@@ -1,9 +1,9 @@
 <?php
 /**
  * The admin-specific functionality of the plugin.
- * @link https://wordpress.org/plugins/woocommerce-role-based-price/
- * @package WooCommerce Role Based Price
- * @subpackage WooCommerce Role Based Price/Admin
+ * @link [plugin_url]
+ * @package [package]
+ * @subpackage [package]/Admin
  * @since 3.0
  */
 if ( ! defined( 'WPINC' ) ) { die; }
@@ -47,6 +47,19 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Settings_Options {
 				'multiple' => 'multiple'
 			),
 		);
+        
+        $fields['general']['general'][] = array(
+			'id' => PLUGIN_DB.'allowed_roles1',
+			'multiple' => 'true',
+			'type'    => 'select',
+            'options' => array(1,2,3),
+			'label' => __('Allowed User Roles',PLUGIN_TXT),
+			'desc' => __('User Roles To List In Product Edit Page',PLUGIN_TXT), 
+			'attr'    => array(
+				'class' => 'wc-pbp-enhanced-select',
+				'multiple' => 'multiple'
+			),
+		);
 		  
 		 
 		$addonSettings = array('addon_sample' => array());
@@ -60,4 +73,3 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Settings_Options {
 }
 
 return new WooCommerce_Plugin_Boiler_Plate_Admin_Settings_Options;
-?>

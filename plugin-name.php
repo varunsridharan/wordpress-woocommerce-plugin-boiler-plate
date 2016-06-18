@@ -67,18 +67,12 @@ function wc_pbp_dependency_deactivate() {
 
 
 
+require_once(PLUGIN_INC.'functions.php');
+require_once(plugin_dir_path(__FILE__).'bootstrap.php');
 
-//if(WooCommerce_Plugin_Boiler_Plate_Dependencies()){
-	
-    require_once(PLUGIN_INC.'functions.php');
-    require_once(plugin_dir_path(__FILE__).'bootstrap.php');
-	
-	if(!function_exists('WooCommerce_Plugin_Boiler_Plate')){
-		function WooCommerce_Plugin_Boiler_Plate(){
-			return WooCommerce_Plugin_Boiler_Plate::get_instance();
-		}
-	}
-	WooCommerce_Plugin_Boiler_Plate();
-//}
-
-?>
+if(!function_exists('WooCommerce_Plugin_Boiler_Plate')){
+    function WooCommerce_Plugin_Boiler_Plate(){
+        return WooCommerce_Plugin_Boiler_Plate::get_instance();
+    }
+}
+WooCommerce_Plugin_Boiler_Plate();

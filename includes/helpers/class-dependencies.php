@@ -36,4 +36,3 @@ if(! function_exists('WooCommerce_Plugin_Boiler_Plate_Dependencies')){
         return WooCommerce_Plugin_Boiler_Plate_Dependencies::active_check($pluginToCheck);
     }
 }
-?>

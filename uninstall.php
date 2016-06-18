@@ -9,7 +9,4 @@
  * @subpackage [package]/core
  * @since [version]
  */
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit;
-}
-?>
+if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) { exit; }

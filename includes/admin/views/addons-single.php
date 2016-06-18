@@ -1,5 +1,14 @@
-<?php $slug =  $wc_pbp_plugin_data['addon_slug']; ?>
-<div class="plugin-card plugin-card-<?php echo $slug; ?> wc-pbp-addon-all wc-pbp-addon-<?php echo $wc_pbp_plugin_data['CategorySlug']; ?>">
+<?php 
+$slug =  $wc_pbp_plugin_data['addon_slug']; 
+$wrapperClass = 'plugin-card plugin-card-'.$slug.' wc-pbp-addon-all wc-pbp-addon-'.$wc_pbp_plugin_data['category-slug'];
+if($wc_pbp_plugin_data['is_active']){
+    $wrapperClass .= ' wc-pbp-addon-active';
+} else {
+    $wrapperClass .= ' wc-pbp-addon-inactive';
+}
+
+?>
+<div id="<?php echo $slug; ?>" class="<?php echo $wrapperClass; ?>">
 	<?php wc_pbp_get_ajax_overlay(); ?>
 	<div class="plugin-card-top">
 		<div class="name column-name">

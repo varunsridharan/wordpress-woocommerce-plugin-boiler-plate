@@ -28,7 +28,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
 
     public function set_wc_screen_ids($screens){ 
         $screen = $screens; 
-      	$screen[] = 'woocommerce_page_woocommerce-role-based-price-settings';
+      	$screen[] = 'woocommerce_page_woocommerce-plugin-boiler-plate-settings';
         return $screen;
     }
     
@@ -40,6 +40,17 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
         new WooCommerce_Plugin_Boiler_Plate_Addons;
     }
  
+    
+    public function init_admin_notices(){
+        $displayCallBack = array( WooCommerce_Plugin_Boiler_Plate_Admin_Notices::getInstance(), 'displayNotices' );
+        $dismissCallBack = array( WooCommerce_Plugin_Boiler_Plate_Admin_Notices::getInstance(), 'ajaxDismissNotice' );
+        
+        if ( ! has_action( 'admin_notices', $displayCallBack ) ) { add_action( 'admin_notices', $displayCallBack ); }
+            
+        if ( ! has_action( 'admin_notices', $dismissCallBack ) ) {
+            add_action( 'wp_ajax_' . WooCommerce_Plugin_Boiler_Plate_Admin_Notices::KILL_STICKY_NTC_AJAX_ACTION, $dismissCallBack );
+        }        
+    }
     
 	/**
 	 * Add a new integration to WooCommerce.
@@ -122,5 +133,3 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
 		return $plugin_meta;
 	}	    
 }
-
-?>

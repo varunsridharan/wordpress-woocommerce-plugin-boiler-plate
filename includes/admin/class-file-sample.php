@@ -14,4 +14,3 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Sample_Class {
     
     }
 }
-?>

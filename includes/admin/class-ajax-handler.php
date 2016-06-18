@@ -1,9 +1,9 @@
 <?php
 /**
  * The admin-specific functionality of the plugin.
- * @link https://wordpress.org/plugins/woocommerce-role-based-price/
- * @package WooCommerce Role Based Price
- * @subpackage WooCommerce Role Based Price/Admin
+ * @link [plugin_url]
+ * @package [package]
+ * @subpackage [package]/Admin
  * @since 3.0
  */
 if ( ! defined( 'WPINC' ) ) { die; }
@@ -32,4 +32,3 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Ajax_Handler {
 	
 
 }
-?>
