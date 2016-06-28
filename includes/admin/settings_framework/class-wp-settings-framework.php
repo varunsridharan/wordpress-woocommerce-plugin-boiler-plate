@@ -20,29 +20,40 @@ class WooCommerce_Plugin_Boiler_Plate_Settings_Framework {
     private $create_function;
     private $settings_key;
     private $settings_values;
+    private $pageName;
 	
-    function __construct($page_hook = '') {
+    function __construct($page_hook = '',$pageName = '') {
         $this->settings_section = array();
         $this->settings_fields = array();
         $this->create_function = array();
-        $this->add_settings_pages();
-        //$this->get_settings();
+        $this->add_settings_pages(); 
         $this->add_settings_section();
         $this->create_callback_function();
 		$this->page_hook = $page_hook;
+        $this->pageName = $pageName;
         
-        if(empty($page_hook)) { add_action( 'admin_menu', array( $this, 'admin_menu' ) ); }
+        wc_pbp_add_vars('settings_page',$this->page_hook);
+        
+        if(empty($pageName)){
+            $this->pageName = __('Boiler Plate Settings',PLUGIN_TXT);
+        }
+        
+        if(empty($page_hook)) {
+            add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+        }
         add_action( 'admin_init', array( $this, 'admin_init' ) );
     }
     
-    
     function admin_menu() {
 		$this->page_hook = add_submenu_page('woocommerce',
-											__('Boiler Plate Settings',PLUGIN_TXT),
-											__('Boiler Plate Settings',PLUGIN_TXT),
-											'manage_woocommerce',PLUGIN_SLUG.'-settings', array( $this, 'admin_page' ) );
+											$this->pageName,
+											$this->pageName,
+											'manage_woocommerce',
+                                            PLUGIN_SLUG.'-settings',
+                                            array( $this, 'admin_page' ) );
+        
+        wc_pbp_add_vars('settings_page',$this->page_hook);
 	}
-    
     
     private function add_settings_pages(){
 		$pages = array();
@@ -84,9 +95,6 @@ class WooCommerce_Plugin_Boiler_Plate_Settings_Framework {
             $this->settings_section[$sk] = $s; 
         }
     } 
-    
-    
-
 
     function admin_init(){ 
 		$this->settings = new WooCommerce_Plugin_Boiler_Plate_WP_Settings();
@@ -115,8 +123,7 @@ class WooCommerce_Plugin_Boiler_Plate_Settings_Framework {
 		
 		$this->settings->init($pages, PLUGIN_DB );
     }
-    
-    
+
     public function admin_page(){
 		echo '<div class="wrap wc_pbp_settings">';
 		settings_errors();
@@ -125,29 +132,4 @@ class WooCommerce_Plugin_Boiler_Plate_Settings_Framework {
 		$this->settings->render_form();
 		echo '</div>';
 	}
- 
-    function get_option($id = ''){
-        if( ! empty($this->settings_values) &&  ! empty($id)){
-            if(isset($this->settings_values[$id])){
-                return $this->settings_values[$id];
-            }
-        }
-        return false;
-    
-    }
-    
-    function get_settings($key = ''){
-        $values = array();
-        foreach($this->settings_page as $settings){
-            $this->settings_key[] = PLUGIN_DB.$settings['slug'];
-            $db_val = get_option(PLUGIN_DB.$settings['slug']);
-            if(is_array($db_val)){
-                unset($db_val['section_id']); 
-                $values = array_merge($db_val,$values);
-            }
-        }
-        
-        $this->settings_values = $values;
-        return $values;
-    }
-}
+ }

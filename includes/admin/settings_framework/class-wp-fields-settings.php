@@ -65,6 +65,23 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields' ) ) {
 			echo $args['before'] . $html . $args['after'] . $this->description( $args['desc'] );
 		}
 
+        
+        /**
+		 * Displays a textarea.
+		 *
+		 * @param array   $args
+		 */
+        public function callback_richtext( $args ) {
+            $settings = isset($args['richtext_settings']) ? $args['richtext_settings'] : array();
+			$size  = ( isset( $args['size'] ) && $args['size'] ) ? $args['size'] : 'regular';
+			$args  = $this->get_arguments( $args ); // escapes all attributes
+			$value = (string) esc_textarea( $this->get_option( $args ) );
+			$error = $this->get_setting_error( $args['id'] ); 
+
+            $content = wp_editor($value, $args['id'],$settings);
+			echo $args['before'] . $content . $args['after'] . $this->description( $args['desc'] );
+		}
+        
 
 		/**
 		 * Displays a select dropdown.
@@ -72,6 +89,7 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields' ) ) {
 		 * @param array   $args
 		 */
 		public function callback_select( $args ) {
+            $args  = $this->check_options_type($args);
 			$args  = $this->get_arguments( $args ); // escapes all attributes
 			$value = array_map( 'esc_attr', array_values( (array) $this->get_option( $args ) ) );
 			$multiple = ( preg_match( '/multiple="multiple"/', strtolower( $args['attr'] ) ) ) ? '[]' : '';
@@ -187,6 +205,30 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields' ) ) {
 		}
 
 
+        public function check_options_type($args){
+            if(isset($args['select_type'])){
+                $type = $args['select_type'];
+                if($type == 'userrole'){
+                    $args['options'] = $this->get_user_roles($args);
+                }
+            }
+             
+            return $args;
+        }
+        
+        
+        private function get_user_roles($args){
+            $return = array();
+            if(function_exists(wp_roles)){
+                $all_roles = wp_roles()->roles; 
+                foreach($all_roles as $role=>$roleV){
+                    $return[$role] = $roleV['name'];
+                }
+            }
+            return $return;
+        }
+        
+        
 		/**
 		 * Returns a field description.
 		 *
@@ -197,7 +239,6 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields' ) ) {
 				return sprintf( '<p class="description">%s</p>', $desc );
 			}
 		}
-
 
 		/**
 		 * Returns validation errors for a settings field.
@@ -224,7 +265,6 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields' ) ) {
 
 			return $display_error;
 		}
-
 
 		/**
 		 * Escapes and creates additional attributes for a setting field.
@@ -318,5 +358,5 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields' ) ) {
 		}
 
 
-	} // class
-} // class exists
+	}
+}

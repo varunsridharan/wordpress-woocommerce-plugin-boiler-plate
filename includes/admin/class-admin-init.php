@@ -39,8 +39,6 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
         new WooCommerce_Plugin_Boiler_Plate_Admin_Ajax_Handler;
         new WooCommerce_Plugin_Boiler_Plate_Addons;
     }
- 
-    
     public function init_admin_notices(){
         $displayCallBack = array( WooCommerce_Plugin_Boiler_Plate_Admin_Notices::getInstance(), 'displayNotices' );
         $dismissCallBack = array( WooCommerce_Plugin_Boiler_Plate_Admin_Notices::getInstance(), 'ajaxDismissNotice' );
@@ -65,26 +63,30 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
     /**
 	 * Register the stylesheets for the admin area.
 	 */
-	public function enqueue_styles() { 
+	public function enqueue_styles() {  
+        $pages = wc_pbp_get_screen_ids();
+        $pages[] = wc_pbp_vars('settings_page');
         $current_screen = wc_pbp_current_screen();
+
         $addon_url = admin_url('admin-ajax.php?action=wc_pbp_addon_custom_css');
-        
         wp_register_style(PLUGIN_SLUG.'_backend_style',PLUGIN_CSS.'backend.css' , array(), PLUGIN_V, 'all' );  
         wp_register_style(PLUGIN_SLUG.'_addons_style',$addon_url , array(), PLUGIN_V, 'all' );  
         
-        if(in_array($current_screen , wc_pbp_get_screen_ids())) {
+        if(in_array($current_screen , $pages )) {
             wp_enqueue_style(PLUGIN_SLUG.'_backend_style');  
             wp_enqueue_style(PLUGIN_SLUG.'_addons_style');  
         }
         
         do_action('wc_pbp_admin_styles',$current_screen);
 	}
-	
     
     /**
 	 * Register the JavaScript for the admin area.
 	 */
 	public function enqueue_scripts() {
+        $pages = wc_pbp_get_screen_ids();
+        $pages[] = wc_pbp_vars('settings_page');
+        
         $current_screen = wc_pbp_current_screen();
         $addon_url = admin_url('admin-ajax.php?action=wc_pbp_addon_custom_js');
         
@@ -92,7 +94,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
         wp_register_script(PLUGIN_SLUG.'_addons_script', $addon_url, array('jquery'), PLUGIN_V, false ); 
         
         
-        if(in_array($current_screen , wc_pbp_get_screen_ids())) {
+        if(in_array($current_screen ,$pages)) {
             wp_enqueue_script(PLUGIN_SLUG.'_backend_script' ); 
             wp_enqueue_script(PLUGIN_SLUG.'_addons_script' ); 
         } 
@@ -100,7 +102,6 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
         do_action('wc_pbp_admin_scripts',$current_screen); 
  
 	}
-     
  
     /**
 	 * Adds Some Plugin Options
@@ -110,7 +111,8 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
 	 * @return array
 	 */
     public function plugin_action_links($action,$file,$plugin_meta,$status){
-        $actions[] = sprintf('<a href="%s">%s</a>', '#', __('Settings',PLUGIN_TXT) );
+        $menu_link = admin_url('admin.php?page=woocommerce-plugin-boiler-plate-settings');
+        $actions[] = sprintf('<a href="%s">%s</a>', $menu_link, __('Settings',PLUGIN_TXT) );
         $actions[] = sprintf('<a href="%s">%s</a>', 'http://varunsridharan.in/plugin-support/', __('Contact Author',PLUGIN_TXT) );
         $action = array_merge($actions,$action);
         return $action;

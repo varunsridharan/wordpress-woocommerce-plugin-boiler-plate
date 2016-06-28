@@ -10,16 +10,49 @@
 if ( ! defined( 'WPINC' ) ) { die; }
 
 
-global $wc_pbp_db_settins_values;
+global $wc_pbp_db_settins_values, $wc_pbp_vars;
 $wc_pbp_db_settins_values = array();
+$wc_pbp_vars = array();
+
 add_action('wc_pbp_loaded','wc_pbp_get_settings_from_db',1);
+
+if(!function_exists('wc_pbp_vars')){
+    function wc_pbp_vars($key,$values = false){
+        global $wc_pbp_vars;
+        if(isset($wc_pbp_vars[$key])){ 
+            return $wc_pbp_vars[$key]; 
+        }
+        return $values;
+    }
+}
+if(!function_exists('wc_pbp_add_vars')){
+    function wc_pbp_add_vars($key,$values){
+        global $wc_pbp_vars;
+        if(! isset($wc_pbp_vars[$key])){ 
+            $wc_pbp_vars[$key] = $values; 
+            return true; 
+        }
+        return false;
+    }
+}
+if(!function_exists('wc_pbp_remove_vars')){
+    function wc_pbp_remove_vars($key){
+        global $wc_pbp_vars;
+        if(isset($wc_pbp_vars[$key])){ 
+            unset($wc_pbp_vars[$key]);
+            return true; 
+        }
+        return false;
+    }
+}
+
 
 if(!function_exists('wc_pbp_option')){
 	function wc_pbp_option($key = ''){
 		global $wc_pbp_db_settins_values;
 		if($key == ''){return $wc_pbp_db_settins_values;}
-		if(isset($wc_pbp_db_settins_values[WC_BOF_DB.$key])){
-			return $wc_pbp_db_settins_values[WC_BOF_DB.$key];
+		if(isset($wc_pbp_db_settins_values[PLUGIN_DB.$key])){
+			return $wc_pbp_db_settins_values[PLUGIN_DB.$key];
 		} 
 		
 		return false;
@@ -37,7 +70,7 @@ if(!function_exists('wc_pbp_get_settings_from_db')){
 		$values = array();
 		foreach($section as $settings){
 			foreach($settings as $set){
-				$db_val = get_option(WC_BOF_DB.$set['id']);
+				$db_val = get_option(PLUGIN_DB.$set['id']);
 				if(is_array($db_val)){ unset($db_val['section_id']); $values = array_merge($db_val,$values); }
 			}
 		}        
@@ -98,7 +131,7 @@ if(!function_exists('wc_pbp_dependency_message')){
 if(!function_exists('wc_pbp_get_template')){
 	function wc_pbp_get_template($name,$args = array(),$template_base = '',$remote_template = ''){
         if(empty($template_base)){$template_base = PLUGIN_PATH.'/templates/';}
-        if(empty($remote_template)){$remote_template = 'woocommerce/wcbulkorder';}
+        if(empty($remote_template)){$remote_template = 'woocommerce/';}
 		wc_get_template( $name, $args ,$remote_template,  $template_base);
 	}
 }
@@ -137,7 +170,7 @@ if(!function_exists('wc_pbp_settings_get_categories')){
 
 if(!function_exists('wc_pbp_settings_page_link')){
     function wc_pbp_settings_page_link($tab = '',$section = ''){
-        $settings_url = admin_url('admin.php?page='.WC_BOF_SLUG.'-settings');
+        $settings_url = admin_url('admin.php?page='.PLUGIN_SLUG.'-settings');
         if(!empty($tab)){$settings_url .= '&tab='.$tab;}
         if(!empty($section)){$settings_url .= '#'.$section;}
         return $settings_url;
@@ -258,7 +291,7 @@ if(!function_exists('wc_pbp_admin_notice')){
     }
 }
 
-if ( ! function_exists( 'wc_pbp_notice' ) ) {
+if(!function_exists('wc_pbp_notice')){
     function wc_pbp_notice( $message, $type = 'update',$args = array()) {
         $notice = '';
         $defaults = array('times' => 1,'screen' => array(),'users' => array(), 'wraper' => true);    
@@ -285,7 +318,7 @@ if ( ! function_exists( 'wc_pbp_notice' ) ) {
     }
 }
 
-if ( ! function_exists( 'wc_pbp_remove_link' ) ) {
+if(!function_exists('wc_pbp_remove_link')){
     function wc_pbp_remove_link($attributes = '',$msgID = '$msgID$', $text = 'Remove Notice') {
         if(!empty($msgID)){
             $removeKey = PLUGIN_DB.'MSG';
@@ -298,21 +331,17 @@ if ( ! function_exists( 'wc_pbp_remove_link' ) ) {
     }
 }
 
-
-
-
-
 if(!function_exists('wc_pbp_get_ajax_overlay')){
 	/**
 	 * Prints WC PBP Ajax Loading Code
 	 */
 	function wc_pbp_get_ajax_overlay($echo = true){
 		$return = '<div class="wc_pbp_ajax_overlay">
-		<div class="sk-folding-cube">
-		<div class="sk-cube1 sk-cube"></div>
-		<div class="sk-cube2 sk-cube"></div>
-		<div class="sk-cube4 sk-cube"></div>
-		<div class="sk-cube3 sk-cube"></div>
+		<div class="wc_pbp_sk-folding-cube">
+		<div class="wc_pbp_sk-cube1 wc_pbp_sk-cube"></div>
+		<div class="wc_pbp_sk-cube2 wc_pbp_sk-cube"></div>
+		<div class="wc_pbp_sk-cube4 wc_pbp_sk-cube"></div>
+		<div class="wc_pbp_sk-cube3 wc_pbp_sk-cube"></div>
 		</div>
 		</div>';
 		if($echo){echo $return;}

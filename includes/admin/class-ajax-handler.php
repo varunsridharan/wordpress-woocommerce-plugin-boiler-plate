@@ -29,6 +29,4 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_Ajax_Handler {
 		do_action('wc_pbp_addon_scripts'); 
 		wp_die();
 	}
-	
-
 }

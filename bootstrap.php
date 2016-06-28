@@ -68,7 +68,7 @@ class WooCommerce_Plugin_Boiler_Plate {
      */
     private function load_required_files(){
        $this->load_files(PLUGIN_INC.'class-*.php');
-	   $this->load_files(PLUGIN_ADMIN.'settings_framework/class-wp-*.php');
+	   $this->load_files(PLUGIN_SETTINGS.'class-wp-*.php');
         
        if(wc_pbp_is_request('admin')){
            $this->load_files(PLUGIN_ADMIN.'class-*.php');
@@ -120,7 +120,6 @@ class WooCommerce_Plugin_Boiler_Plate {
         }
         do_action('wc_pbp_after_init');
     }
-    
     
 	# Returns Plugin's Functions Instance
 	public function func(){
@@ -176,7 +175,7 @@ class WooCommerce_Plugin_Boiler_Plate {
 		
 		$this->define('PLUGIN_LANGUAGE_PATH',PLUGIN_PATH.'languages'); # Plugin Language Folder
 		$this->define('PLUGIN_ADMIN',PLUGIN_INC.'admin/'); # Plugin Admin Folder
-		$this->define('PLUGIN_SETTINGS',PLUGIN_ADMIN.'settings/'); # Plugin Settings Folder
+		$this->define('PLUGIN_SETTINGS',PLUGIN_ADMIN.'settings_framework/'); # Plugin Settings Folder
 		$this->define('PLUGIN_ADDON',PLUGIN_PATH.'addons/');
         
 		$this->define('PLUGIN_URL',plugins_url('', __FILE__ ).'/');  # Plugin URL

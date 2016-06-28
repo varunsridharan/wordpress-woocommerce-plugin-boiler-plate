@@ -68,7 +68,7 @@ function wc_pbp_dependency_deactivate() {
 
 
 require_once(PLUGIN_INC.'functions.php');
-require_once(plugin_dir_path(__FILE__).'bootstrap.php');
+require_once(PLUGIN_PATH.'bootstrap.php');
 
 if(!function_exists('WooCommerce_Plugin_Boiler_Plate')){
     function WooCommerce_Plugin_Boiler_Plate(){

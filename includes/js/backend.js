@@ -5,6 +5,7 @@ jQuery(document).ready(function () {
     if (jQuery('div.wc_pbp_addon_listing').size() > 0) {
         jQuery('p.submit').remove();
     }
+
     if (jQuery('.wc_pbp_settings_submenu').size() > 0) {
         var id = window.location.hash;
         jQuery('.wc_pbp_settings_submenu a').removeClass('current');
@@ -15,22 +16,23 @@ jQuery(document).ready(function () {
         }
         http_reffer = jQuery('input[name=_wp_http_referer').val();
 
-        settings_showHash(id);
+        wc_pbp_settings_showHash(id);
     }
+    
     jQuery('.wc_pbp_settings_submenu a').click(function () {
         var id = jQuery(this).attr('href');
         jQuery('.wc_pbp_settings_submenu a').removeClass('current');
         jQuery(this).addClass('current');
-        settings_showHash(id);
+        wc_pbp_settings_showHash(id);
         jQuery('input[name=_wp_http_referer').val(http_reffer + id)
     });
 
-
     jQuery('.wc_pbp_addon_listing').on('click', '.wc-pbp-activate-now', function () {
-        active_deactive_addon(jQuery(this), '.wc-pbp-deactivate-now');
+        wc_pbp_active_deactive_addon(jQuery(this), '.wc-pbp-deactivate-now');
     });
+    
     jQuery('.wc_pbp_addon_listing').on('click', '.wc-pbp-deactivate-now', function () {
-        active_deactive_addon(jQuery(this), '.wc-pbp-activate-now')
+        wc_pbp_active_deactive_addon(jQuery(this), '.wc-pbp-activate-now')
     });
 
     addons_html = jQuery('.wc_pbp_addon_listing').clone();
@@ -39,10 +41,10 @@ jQuery(document).ready(function () {
 
     jQuery('ul.wc_pbp_addons_category li a').each(function () {
         var category = jQuery(this).attr('data-category');
-        var catCount = jQuery('.wc-pbp-addon-'+category).size();
-        jQuery(this).append(' <span class="catCount"> ('+catCount+') </span>');
-
+        var catCount = jQuery('.wc-pbp-addon-' + category).size();
+        jQuery(this).append(' <span class="catCount"> (' + catCount + ') </span>');
     });
+
     jQuery('ul.wc_pbp_addons_category li a').click(function () {
         var cat = jQuery(this).attr('data-category');
         var NewDis = 'div.wc-pbp-addon-' + cat;
@@ -65,13 +67,13 @@ jQuery(document).ready(function () {
 
 });
 
-function settings_showHash(id) {
+function wc_pbp_settings_showHash(id) {
     jQuery('div.wc_pbp_settings_content').hide();
     id = id.replace('#', '#settings_');
     jQuery(id).show();
 }
 
-function active_deactive_addon(ref, oppo) {
+function wc_pbp_active_deactive_addon(ref, oppo) {
     if (typeof (oppo) === 'undefined') oppo = '.wc-pbp-deactivate-now';
     var clicked = ref;
     var slug = ref.parent().attr('data-pluginslug');
@@ -106,6 +108,5 @@ function active_deactive_addon(ref, oppo) {
             addons_html = jQuery(response);
         });
     });
-
 
 }

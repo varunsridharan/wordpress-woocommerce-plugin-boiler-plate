@@ -50,6 +50,34 @@ function get_php_files($dir = __DIR__){
 		}
 	}
 }
-?>
-
-
+?> 
+[plugin_url] <br/> <br/>
+[plugin_name] <br/> <br/>
+[version] <br/> <br/>
+[package] <br/> <br/>
+WooCommerce Plugin Boiler Plate <br/> <br/>
+WooCommerce_Plugin_Boiler_Plate  <br/> <br/>
+woocommerce-plugin-boiler-plate <br/> <br/>
+wc_pbp	 <br/> <br/>
+wc-pbp <br/> <br/>
+PLUGIN_FILE <br/> <br/>
+PLUGIN_PATH <br/> <br/>
+PLUGIN_INC <br/> <br/>
+PLUGIN_DEPEN <br/> <br/>
+PLUGIN_NAME <br/> <br/>
+PLUGIN_SLUG <br/> <br/>
+PLUGIN_TXT <br/> <br/>
+PLUGIN_DB <br/> <br/>
+PLUGIN_V <br/> <br/>
+PLUGIN_LANGUAGE_PATH <br/> <br/>
+PLUGIN_ADMIN <br/> <br/>
+PLUGIN_SETTINGS <br/> <br/>
+PLUGIN_ADDON <br/> <br/>
+PLUGIN_URL <br/> <br/>
+PLUGIN_CSS <br/> <br/>
+PLUGIN_IMG <br/> <br/>
+PLUGIN_JS <br/> <br/>
+PLUGIN_ADDON_URL <br/> <br/>
+PLUGIN_ADDON_CSS <br/> <br/>
+PLUGIN_ADDON_IMG <br/> <br/>
+PLUGIN_ADDON_JS <br/> <br/>
