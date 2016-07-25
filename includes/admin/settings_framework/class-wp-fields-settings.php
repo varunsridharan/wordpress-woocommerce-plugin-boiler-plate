@@ -77,7 +77,7 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields' ) ) {
 			$args  = $this->get_arguments( $args ); // escapes all attributes
 			$value = (string) esc_textarea( $this->get_option( $args ) );
 			$error = $this->get_setting_error( $args['id'] ); 
-
+            $settings['textarea_name'] = $args['section'].'['.$args['id'].']';
             $content = wp_editor($value, $args['id'],$settings);
 			echo $args['before'] . $content . $args['after'] . $this->description( $args['desc'] );
 		}
@@ -219,7 +219,7 @@ if ( !class_exists( 'WooCommerce_Plugin_Boiler_Plate_Settings_WP_Fields' ) ) {
         
         private function get_user_roles($args){
             $return = array();
-            if(function_exists(wp_roles)){
+            if(function_exists('wp_roles')){
                 $all_roles = wp_roles()->roles; 
                 foreach($all_roles as $role=>$roleV){
                     $return[$role] = $roleV['name'];

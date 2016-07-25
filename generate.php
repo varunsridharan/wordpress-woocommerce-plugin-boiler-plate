@@ -43,7 +43,13 @@ function get_php_files($dir = __DIR__){
 		if(is_dir($dir.'/'.$file)){
 			get_php_files($dir.'/'.$file);
 		} else {
-			if(pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'php' || pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'txt'){
+			if(
+                pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'php' || 
+                pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'txt' || 
+                pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'css' || 
+                pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'js'  ||
+                pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'pot' ||            
+            ){
 				if($file == 'generate.php'){continue;}
 				$files_check[$file] = $dir.'/'.$file;
 			}

@@ -158,10 +158,14 @@ abstract class WooCommerce_Plugin_Boiler_Plate_Admin_Notice {
      * @param array $screen The admin screens this notice will be displayed into (empty for all screens)
      * @param array $users Array of users this notice concernes (empty for all users)
      */
-    public function __construct($content, $times = 1, $screen = array(), $users = array(), $WithWraper = true) {
+    public function __construct($content, $id='', $times = 1, $screen = array(), $users = array(), $WithWraper = true) {
         $this->content = $content;
         $this->screen = $screen;
-        $this->id = uniqid();
+        if(empty($id)){
+            $this->id = uniqid();    
+        } else {
+            $this->id = $id;
+        }
         $this->times = $times;
         $this->users = $users;
         $this->WithWraper = $WithWraper;
@@ -179,7 +183,7 @@ abstract class WooCommerce_Plugin_Boiler_Plate_Admin_Notice {
         if($this->is_dismissible){ $class .= ' notice is-dismissible'; }
         
         
-        $before = '<div class="' .$class. '">';
+        $before = '<div id="wc_pbp_notice_'.$this->id.'"  class="' .$class. '">';
         $before .= $wrapInParTag ? '<p>' : '';
         $after = $wrapInParTag ? '</p>' : '';
         $after .= '</div>';
@@ -369,44 +373,4 @@ class WooCommerce_Plugin_Boiler_Plate_Admin_UpdateNag_Notice extends WooCommerce
  */
 if(!has_action('init', array('WooCommerce_Plugin_Boiler_Plate_Admin_Notices', 'getInstance'))){
     add_action('init', array('WooCommerce_Plugin_Boiler_Plate_Admin_Notices', 'getInstance'));
-}
-
-if ( ! function_exists( 'wc_pbp_notice' ) ) {
-    function wc_pbp_notice( $message, $type = 'update',$args = array()) {
-        $notice = '';
-        $defaults = array('times' => 1,'screen' => array(),'users' => array(), 'wraper' => true);    
-        $args = wp_parse_args( $args, $defaults );
-        extract($args);
-        
-        if($type == 'error'){
-            $notice = new WooCommerce_Plugin_Boiler_Plate_Admin_Error_Notice($message,$times, $screen, $users);
-        }
-        
-        if($type == 'update'){
-            $notice = new WooCommerce_Plugin_Boiler_Plate_Admin_Updated_Notice($message,$times, $screen, $users);
-        }
-        
-        if($type == 'upgrade'){
-            $notice = new WooCommerce_Plugin_Boiler_Plate_Admin_UpdateNag_Notice($message,$times, $screen, $users);
-        } 
-        
-        $msgID = $notice->getId();
-        $message = str_replace('$msgID$',$msgID,$message);
-        $notice->setContent($message);
-        $notice->setWrapper($wraper);
-        WooCommerce_Plugin_Boiler_Plate_Admin_Notices::getInstance()->addNotice($notice);
-    }
-}
-
-if ( ! function_exists( 'wc_pbp_remove_link' ) ) {
-    function wc_pbp_remove_link($attributes = '',$msgID = '$msgID$', $text = '') {
-        if(empty($text)){$text = 'Remove Notice';}
-        if(!empty($msgID)){
-            $removeKey = PLUGIN_DB.'MSG';
-            $url = admin_url().'?'.$removeKey.'='.$msgID ; 
-            $url = urldecode($url);
-            $tag = '<a '.$attributes.' href="'.$url.'">'.$text.'</a>';
-            return $tag;
-        }
-    }
 }

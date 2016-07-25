@@ -32,10 +32,12 @@ class WooCommerce_Plugin_Boiler_Plate_Settings_Framework {
 		$this->page_hook = $page_hook;
         $this->pageName = $pageName;
         
-        wc_pbp_add_vars('settings_page',$this->page_hook);
+        
         
         if(empty($pageName)){
             $this->pageName = __('Boiler Plate Settings',PLUGIN_TXT);
+        } else {
+            wc_pbp_add_vars('settings_page',$this->page_hook);
         }
         
         if(empty($page_hook)) {
