@@ -48,7 +48,7 @@ function get_php_files($dir = __DIR__){
                 pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'txt' || 
                 pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'css' || 
                 pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'js'  ||
-                pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'pot' ||            
+                pathinfo($dir.'/'.$file, PATHINFO_EXTENSION) == 'pot'           
             ){
 				if($file == 'generate.php'){continue;}
 				$files_check[$file] = $dir.'/'.$file;

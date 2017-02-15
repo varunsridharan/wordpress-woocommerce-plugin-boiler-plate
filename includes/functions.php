@@ -48,14 +48,14 @@ if(!function_exists('wc_pbp_remove_vars')){
 
 
 if(!function_exists('wc_pbp_option')){
-	function wc_pbp_option($key = ''){
+	function wc_pbp_option($key = '',$default = false){
 		global $wc_pbp_db_settins_values;
 		if($key == ''){return $wc_pbp_db_settins_values;}
 		if(isset($wc_pbp_db_settins_values[PLUGIN_DB.$key])){
 			return $wc_pbp_db_settins_values[PLUGIN_DB.$key];
 		} 
 		
-		return false;
+		return $default;
 	}
 }
 

@@ -77,7 +77,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
             wp_enqueue_style(PLUGIN_SLUG.'_addons_style');  
         }
         
-        do_action('wc_pbp_admin_styles',$current_screen,$pages[]);
+        do_action('wc_pbp_admin_styles',$current_screen,$pages);
 	}
     
     /**
@@ -98,7 +98,7 @@ class WooCommerce_Plugin_Boiler_Plate_Admin {
             wp_enqueue_script(PLUGIN_SLUG.'_addons_script' ); 
         } 
         
-        do_action('wc_pbp_admin_scripts',$current_screen); 
+        do_action('wc_pbp_admin_scripts',$current_screen,$pages); 
  	}
  
     /**
